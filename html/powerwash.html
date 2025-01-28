@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerWash Simulator</title>
+    <link rel="stylesheet" href="/css/powerwash.css">
+</head>
+<body>
+    <div class="powerwash-container">
+        <h1 class="powerwash-title">PowerWash Simulator</h1>
+        <div class="powerwash-info">
+            <span id="progress">Surface nettoyée : 0%</span>
+            <br>
+            <span id="timer">Temps restant : 30s</span>
+        </div>
+        <div id="surface" class="powerwash-surface">
+        <!-- La grille sera générée en JavaScript -->
+        </div>
+    </div>
+    <div id="modal" class="powerwash-modal">
+        <div class="powerwash-modal-content">
+            <h2 id="modal-title" class="powerwash-modal-title"></h2>
+            <p id="modal-message" class="powerwash-modal-message"></p>
+            <button id="modal-close" class="powerwash-modal-button">Fermer</button>
+        </div>
+    </div>
+    <script src="/js/powerwash.js"></script>
+</body>
+</html>
