@@ -5,6 +5,7 @@ const games = [
     { name: 'escape', html: './html/escape.html', js: 'escape.js' },
     { name: 'tapeLeMot', html: './html/tapeLeMot.html', js: 'tapeLeMot.js' },
     { name: 'sigma', html: './html/sigma.html', js: 'sigma.js' },
+    { name: 'shadowBox', html: './html/shadowBox.html', js: 'shadowBox.js' },
 ];
 
 // Affiche le titre comme un serpent qui bouge.
