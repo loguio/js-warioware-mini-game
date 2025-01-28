@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de la zone sécurisée</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            font-family: 'Arial', sans-serif;
+        }
+
+        #ga {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 0, 0, 0.3);
+            border: 4px solid #000;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .sz {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: rgba(0, 255, 0, 0.4);
+            border: 2px solid #2ecc71;
+            border-radius: 50%;
+            cursor: url('../img/etoile.png'), auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #c {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            background: rgba(44, 62, 80, 0.8);
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div id="c">5</div>
+    <div id="ga">
+        <div class="sz" id="sz"></div>
+    </div>
+
+    <script>
+        const ga = document.getElementById("ga");
+        const sz = document.getElementById("sz");
+        const cDisplay = document.getElementById("c");
+
+        // Positionner la safe zone aléatoirement
+        function positionsz() {
+            const gaRect = ga.getBoundingClientRect();
+            const maxX = gaRect.width - sz.offsetWidth;
+            const maxY = gaRect.height - sz.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            sz.style.left = `${randomX}px`;
+            sz.style.top = `${randomY}px`;
+        }
+
+        // Vérifier si la souris est dans la zone sécurisée
+        function isMouseInsz(event) {
+            const szRect = sz.getBoundingClientRect();
+            return (
+                event.clientX >= szRect.left &&
+                event.clientX <= szRect.right &&
+                event.clientY >= szRect.top &&
+                event.clientY <= szRect.bottom
+            );
+        }
+
+        // Initialiser le jeu
+        function startGame() {
+            positionsz();
+
+            let c = 2;
+            cDisplay.textContent = c;
+
+            const interval = setInterval(() => {
+                c--;
+                cDisplay.textContent = c;
+
+                if (c <= 0) {
+                    clearInterval(interval);
+                    ga.removeEventListener("mousemove", handleMouseMove);
+
+                    if (!mouseInsz) {
+                        alert("Défaite");
+                    } else {
+                        alert("Victoire");
+                    }
+                }
+            }, 1000);
+
+            let mouseInsz = false;
+
+            function handleMouseMove(event) {
+                mouseInsz = isMouseInsz(event);
+            }
+
+            ga.addEventListener("mousemove", handleMouseMove);
+        }
+
+        // Lancer le jeu au chargement de la page
+        window.onload = startGame;
+    </script>
+</body>
+</html>
