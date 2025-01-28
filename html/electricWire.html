@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wires Game</title>
+  <link rel="stylesheet" href="../css/electricWire.css">
+</head>
+<body>
+  <div class="game-container">
+    <svg class="wires-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    
+    <!-- Bouts de fils à gauche -->
+    <div class="endpoints-container left">
+      <div class="endpoint" data-color="red" data-id="1"></div>
+      <div class="endpoint" data-color="blue" data-id="2"></div>
+      <div class="endpoint" data-color="magenta" data-id="3"></div>
+      <div class="endpoint" data-color="yellow" data-id="4"></div>
+    </div>
+
+    <!-- Zone centrale avec le timer -->
+    <div class="wires-container">
+      <div id="timer">Temps restant : <span id="countdown">10</span>s</div>
+    </div>
+
+    <!-- Bouts de fils à droite -->
+    <div class="endpoints-container right">
+      <div class="endpoint" data-color="magenta" data-id="3"></div>
+      <div class="endpoint" data-color="red" data-id="1"></div>
+      <div class="endpoint" data-color="yellow" data-id="4"></div>
+      <div class="endpoint" data-color="blue" data-id="2"></div>
+    </div>
+  </div>
+  <script src="../js/electricWire.js"></script>
+</body>
+</html>
