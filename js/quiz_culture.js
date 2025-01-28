@@ -148,6 +148,7 @@ const cityName = document.getElementById('cityName');
 const cityNameDiv = document.getElementById('cityName-div');
 const optionsContainer = document.getElementById('optionsContainer');
 const startButton = document.getElementById('startButton');
+const timerElement = document.getElementById('timer');
 
 function startQuiz() {
     currentQuestionIndex = 0;
@@ -162,10 +163,13 @@ function showQuestion() {
         cityName.textContent = question.city;
         optionsContainer.innerHTML = '';
 
+        defineCityNameStyle("#fff");
+
         question.options.forEach(option => {
             const button = document.createElement('button');
             button.textContent = option;
-            button.onclick = () => checkAnswer(option, question.trueCountry);
+            button.id = 'btnOption'
+            button.onclick = () => checkAnswer(option, question.trueCountry, button);
             optionsContainer.appendChild(button);
         });
 
@@ -176,19 +180,24 @@ function showQuestion() {
             cityNameDiv.style.backgroundColor = "yellow";
             endQuiz();
         }, 3000);
+
+        timerElement.innerHTML = timer;
     } else {
         alert("Quiz terminé !");
+        startButton.textContent = 'Start';
     }
 }
 
-function checkAnswer(selected, trueCountry) {
+function checkAnswer(selected, trueCountry, button) {
     clearTimeout(timer); // Arrêter le timer
     if (selected === trueCountry) {
+        button.style.backgroundColor = "green";
         defineCityNameStyle("green")
         //cityNameDiv.style.backgroundColor = "green"; // Vert si correct
         currentQuestionIndex++;
         setTimeout(showQuestion, 1000); // Attendre 1 seconde avant de montrer la prochaine question
     } else {
+        button.style.backgroundColor = "red";
         defineCityNameStyle("red")
         //cityNameDiv.style.backgroundColor = "red"; // Rouge si incorrect
         endQuiz();
@@ -198,9 +207,10 @@ function checkAnswer(selected, trueCountry) {
 function defineCityNameStyle(color) {
     cityNameDiv.style.minWidth = '150px';
     cityNameDiv.style.height = '80px';
-    cityNameDiv.style.border = 'solid 0.5px #03346E';
+    cityNameDiv.style.border = 'solid 0.5px gray';
     cityNameDiv.style.borderRadius = '5px';
     cityNameDiv.style.marginBottom = '20px';
+    cityNameDiv.style.marginTop = '20px';
     cityNameDiv.style.textAlign = 'center';
     if (color === "green"){
         cityNameDiv.style.backgroundColor = "green";
@@ -208,6 +218,7 @@ function defineCityNameStyle(color) {
 
     if (color === "red"){
         cityNameDiv.style.backgroundColor = "red";
+        startButton.textContent = 'Restart';
     }
 
     if (color === "#fff"){
@@ -216,6 +227,7 @@ function defineCityNameStyle(color) {
 
     if (color === "yellow"){
         cityNameDiv.style.backgroundColor = "yellow";
+        startButton.textContent = 'Restart';
     }
 
     if (color === "RAS"){
