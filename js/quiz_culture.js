@@ -145,12 +145,14 @@ let currentQuestionIndex = 0;
 let timer;
 const quizContainer = document.getElementById('quizContainer');
 const cityName = document.getElementById('cityName');
+const cityNameDiv = document.getElementById('cityName-div');
 const optionsContainer = document.getElementById('optionsContainer');
 const startButton = document.getElementById('startButton');
 
 function startQuiz() {
     currentQuestionIndex = 0;
-    quizContainer.style.backgroundColor = "#fff"; // Réinitialiser la couleur
+    defineCityNameStyle("#fff")
+    //cityNameDiv.style.backgroundColor = "#fff"; // Réinitialiser la couleur
     showQuestion();
 }
 
@@ -170,7 +172,8 @@ function showQuestion() {
         // Changer la couleur après 3 secondes si aucune réponse
         // Jaune si pas de réponse
         timer = setTimeout(() => {
-            quizContainer.style.backgroundColor = "yellow";
+            defineCityNameStyle("yellow")
+            cityNameDiv.style.backgroundColor = "yellow";
             endQuiz();
         }, 3000);
     } else {
@@ -181,12 +184,48 @@ function showQuestion() {
 function checkAnswer(selected, trueCountry) {
     clearTimeout(timer); // Arrêter le timer
     if (selected === trueCountry) {
-        quizContainer.style.backgroundColor = "green"; // Vert si correct
+        defineCityNameStyle("green")
+        //cityNameDiv.style.backgroundColor = "green"; // Vert si correct
         currentQuestionIndex++;
         setTimeout(showQuestion, 1000); // Attendre 1 seconde avant de montrer la prochaine question
     } else {
-        quizContainer.style.backgroundColor = "red"; // Rouge si incorrect
+        defineCityNameStyle("red")
+        //cityNameDiv.style.backgroundColor = "red"; // Rouge si incorrect
         endQuiz();
+    }
+}
+
+function defineCityNameStyle(color) {
+    cityNameDiv.style.minWidth = '150px';
+    cityNameDiv.style.height = '80px';
+    cityNameDiv.style.border = 'solid 0.5px #03346E';
+    cityNameDiv.style.borderRadius = '5px';
+    cityNameDiv.style.marginBottom = '20px';
+    cityNameDiv.style.textAlign = 'center';
+    if (color === "green"){
+        cityNameDiv.style.backgroundColor = "green";
+    }
+
+    if (color === "red"){
+        cityNameDiv.style.backgroundColor = "red";
+    }
+
+    if (color === "#fff"){
+        cityNameDiv.style.backgroundColor = "#fff";
+    }
+
+    if (color === "yellow"){
+        cityNameDiv.style.backgroundColor = "yellow";
+    }
+
+    if (color === "RAS"){
+        cityNameDiv.style.minWidth = '0px';
+        cityNameDiv.style.height = '0px';
+        cityNameDiv.style.border = 'none';
+        cityNameDiv.style.borderRadius = '0';
+        cityNameDiv.style.marginBottom = '0';
+        cityNameDiv.style.textAlign = 'center';
+        cityNameDiv.style.backgroundColor = "none";
     }
 }
 
