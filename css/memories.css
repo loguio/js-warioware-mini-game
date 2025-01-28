@@ -9,45 +9,36 @@ body {
     background-color: #f4f4f9;
 }
 
+.timer {
+    font-size: 40px; /* Texte du timer plus grand */
+    margin-bottom: 40px; /* Plus d'espace en bas */
+}
+
 .game-board {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 100vw;
-    height: 100vh;
+    grid-template-columns: repeat(3, 1fr); /* Grille avec 3 colonnes */
+    gap: 20px; /* Espace entre les cartes */
+    width: 80vw; /* Plateau plus large */
+    max-width: 800px; /* Limite de largeur */
 }
 
 .card {
-    width: 100%;
-    height: calc(100vh / 3 - 10px);
-    background-color: #333;
-    color: #fff;
+    width: 100%; /* Ajustement automatique à la grille */
+    height: 25vw; /* Hauteur proportionnelle */
+    max-height: 250px; /* Limite de hauteur */
+    background-color: #777;
+    border-radius: 16px; /* Coins arrondis plus grands */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    color: white;
+    font-size: 36px; /* Texte plus grand */
     cursor: pointer;
-    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
 }
 
 .hidden {
-    background-color: #777;
+    background-image: url('../img/dos.jpg');
     color: transparent;
-}
-
-.timer {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.message {
-    margin-top: 20px;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-img {
-    width: 80px;
-    height: auto;
-    margin: 5px;
 }

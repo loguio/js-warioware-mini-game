@@ -1,94 +1,96 @@
 const cards = ["pomme", "pomme", "poire", "poire", "peche", "peche"];
 let shuffledCards = [];
-let initialTimer = 5;
-let revealTimer = 10;
-let selectedCard = null;
+let visibleCardIndex = null; // L'index de la carte visible
+let gameActive = false; // Indique si le jeu est actif
+let timer = 5;
 
 const gameBoard = document.getElementById("game-board");
-const initialTimerDisplay = document.getElementById("initial-timer");
-const messageDisplay = document.getElementById("message");
+const timerDisplay = document.getElementById("timer");
 
-// Shuffle cards
+// Mélanger les cartes
 function shuffle(array) {
     return array.sort(() => Math.random() - 0.5);
 }
 
+// Créer le plateau de jeu
 function createBoard() {
     shuffledCards = shuffle([...cards]);
     gameBoard.innerHTML = "";
 
     shuffledCards.forEach((card, index) => {
         const cardElement = document.createElement("div");
-        cardElement.classList.add("card", "hidden");
+        cardElement.classList.add("card");
         cardElement.setAttribute("data-value", card);
         cardElement.setAttribute("data-index", index);
-        cardElement.innerText = "";
 
+        // Afficher les fruits au début
         cardElement.style.backgroundImage = `url('../img/${card}.jpg')`;
-        cardElement.style.backgroundSize = "cover";
         cardElement.addEventListener("click", () => handleCardClick(cardElement));
+
         gameBoard.appendChild(cardElement);
     });
 }
 
-function startInitialTimer() {
-    const timer = setInterval(() => {
-        initialTimer--;
-        initialTimerDisplay.textContent = initialTimer;
-
-        if (initialTimer <= 0) {
-            clearInterval(timer);
-            hideCardsExceptOne();
-            startRevealTimer();
-        }
-    }, 1000);
-}
-
-function hideCardsExceptOne() {
-    const cardElements = document.querySelectorAll(".card");
-    const randomIndex = Math.floor(Math.random() * shuffledCards.length);
-
-    cardElements.forEach((card, index) => {
-        if (index !== randomIndex) {
-            card.classList.add("hidden");
-            card.style.backgroundImage = "url('../img/dos.jpg')";
-        } else {
-            card.classList.remove("hidden");
-            card.style.backgroundImage = `url('../img/${shuffledCards[index]}.jpg')`;
-        }
-    });
-}
-
-function startRevealTimer() {
-    let timer = revealTimer;
-    const revealCountdown = setInterval(() => {
+// Démarrer le compte à rebours
+function startTimer() {
+    const countdown = setInterval(() => {
         timer--;
-        initialTimerDisplay.textContent = `Find the pair: ${timer}`;
+        timerDisplay.textContent = timer;
 
         if (timer <= 0) {
-            clearInterval(revealCountdown);
-            displayMessage("Defeat! Time's up!");
+            clearInterval(countdown);
+            hideCardsAndLeaveOne(); // Cache 5 cartes et laisse une visible
+            gameActive = true; // Le jeu commence
         }
     }, 1000);
 }
 
-function handleCardClick(cardElement) {
-    if (!selectedCard) {
-        selectedCard = cardElement;
-        cardElement.classList.remove("hidden");
-    } else {
-        if (selectedCard.getAttribute("data-value") === cardElement.getAttribute("data-value")) {
-            displayMessage("Victory! You found the pair!");
+// Cacher 5 cartes et laisser une visible
+function hideCardsAndLeaveOne() {
+    const cardElements = document.querySelectorAll(".card");
+    const randomIndex = Math.floor(Math.random() * shuffledCards.length);
+    visibleCardIndex = randomIndex;
+
+    cardElements.forEach((card, index) => {
+        if (index === randomIndex) {
+            // Garder une carte visible
+            card.classList.remove("hidden");
+            card.style.backgroundImage = `url('../img/${shuffledCards[index]}.jpg')`;
         } else {
-            displayMessage("Defeat! Wrong pair.");
+            // Masquer les autres cartes
+            card.classList.add("hidden");
+            card.style.backgroundImage = "url('../img/dos.jpg')";
         }
+    });
+
+    timerDisplay.textContent = "Find the pair!";
+}
+
+// Gérer les clics sur les cartes
+function handleCardClick(cardElement) {
+    if (!gameActive || !cardElement.classList.contains("hidden")) {
+        return; // Ignore les clics si le jeu n'est pas actif ou si la carte est déjà visible
     }
+
+    const clickedValue = cardElement.getAttribute("data-value");
+    const visibleValue = shuffledCards[visibleCardIndex];
+
+    // Afficher temporairement la carte cliquée
+    cardElement.classList.remove("hidden");
+    cardElement.style.backgroundImage = `url('../img/${clickedValue}.jpg')`;
+
+    setTimeout(() => {
+        if (clickedValue === visibleValue) {
+            // Bonne paire
+            alert("Victory! You found the pair!");
+        } else {
+            // Mauvaise paire
+            alert("Defeat! Wrong card.");
+        }
+        gameActive = false; // Terminer le jeu après un clic
+    }, 500); // Afficher la carte cliquée pendant 500ms
 }
 
-function displayMessage(message) {
-    messageDisplay.textContent = message;
-}
-
-// Start game
+// Démarrer le jeu
 createBoard();
-startInitialTimer();
+startTimer();
