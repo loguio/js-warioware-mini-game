@@ -7,6 +7,10 @@
         <title>Mini Games</title>
         <!-- Mise en page qui va décorer la page -->
         <link rel="stylesheet" href="./css/index.css">
+        <link rel="stylesheet" href="./css/sigma.css">
+        <link rel="stylesheet" href="./css/tapeLeMot.css">
+
+
          <!-- Mini-icône en haut de la page -->
         <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
 
@@ -25,16 +29,16 @@
             <!-- J'ajoute un Wario à droite du conteneur -->
             <img src="./img/wario.png" class="wario-right"></img>
 
-            <div class="main-block">
+            <div id="game-container">
                 <!-- Titre du jeu qui est normalement "RANDOM MINI-GAMES" -->
                 <h1 class="main-title"></h1>
 
                 <div class="main-content">
                     <!-- Bouton pour démarrer le jeu -->
-                    <button class="button">DÉMARRER LE JEU</button>
+                    <button class="main-button">DÉMARRER LE JEU</button>
 
                     <!-- Bouton pour voir les paramètres -->
-                    <button class="button">PARAMÈTRES</button>
+                    <button class="main-button">PARAMÈTRES</button>
                 </div>
                 
                 <!-- TO-DO: faire une barre de progression -->
@@ -44,5 +48,7 @@
 
         <!-- Mise en page qui va permettre les intéractions -->
        <script src="./js/index.js"></script>
+       
+
     </body>
 </html>

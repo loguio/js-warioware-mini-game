@@ -1,13 +1,4 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-  }
-  
+
   .container {
     text-align: center;
     padding: 20px;
@@ -40,7 +31,7 @@ body {
     color: #333;
   }
   
-  button {
+  #start-button {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 1rem;
@@ -52,10 +43,10 @@ body {
     transition: background-color 0.3s;
   }
   
-  button:hover {
+  #start-button:hover {
     background-color: #0056b3;
   }
   
-  button:focus {
+  #start-button:focus {
     outline: none;
   }
