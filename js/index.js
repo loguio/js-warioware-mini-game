@@ -3,12 +3,13 @@ const title = document.querySelector(".main-title");
 
 let remainingGames = [
   // Liste dynamique des jeux restants
-  /*{ name: "escape", html: "./html/escape.html", js: "escape.js" },
+  { name: "escape", html: "./html/escape.html", js: "escape.js" },
   { name: "tapeLeMot", html: "./html/tapeLeMot.html", js: "tapeLeMot.js" },
   { name: "sigma", html: "./html/sigma.html", js: "sigma.js" },
   { name: "cible", html: "./html/cible.html", js: "cible.js" },
-  { name: "memories", html: "./html/memories.html", js: "memories.js" },*/
+  { name: "memories", html: "./html/memories.html", js: "memories.js" },
   { name: "quizCulture", html: "./html/quiz_culture.html", js: "quiz_culture.js" },
+  { name: "jeuHoraire", html: "./html/jeuHoraire.html", js: "jeuHoraire.js" },
 ];
 
 // Affiche le titre comme un serpent qui bouge.
@@ -68,7 +69,6 @@ function loadGame(game) {
 }
 
 
-
 function loadNextGame() {
   if (remainingGames.length > 0) {
     // Sélectionner un jeu aléatoire parmi les jeux restants
@@ -76,9 +76,10 @@ function loadNextGame() {
     const nextGame = remainingGames.splice(randomIndex, 1)[0]; // Retirer le jeu sélectionné
     loadGame(nextGame);
   } else {
-    const gameContainer = document.getElementById("game-container");
-    gameContainer.innerHTML =
-      "<h1>🎉 Félicitations, vous avez terminé tous les jeux !</h1>";
+    // Faire appel a la page de fin
+
+    game = { name: "gameOver", html: "./html/gameOver.html", js: "gameOver.js" },
+    loadGame(game);
   }
 }
 
@@ -93,3 +94,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.querySelector(".main-button");
   startButton.addEventListener("click", launchRandomGame);
 });
+
+// Sytème de point
+function getScore() {
+  return parseInt(localStorage.getItem("currentScore")) || 0;
+}
+
+function getHighScore() {
+  return parseInt(localStorage.getItem("highScore")) || 0;
+}
+
+function setScore(score) {
+  localStorage.setItem("currentScore", score);
+}
+
+function setHighScore(score) {
+  localStorage.setItem("highScore", score);
+}
+
+function resetScore() {
+  currentScore = localStorage.getItem("currentScore");
+  highScore = parseInt(localStorage.getItem("highScore")) || 0;
+  localStorage.setItem("currentScore", 0);
+}
+
+function addPoint() {
+  let score = getScore();
+  score += 1;
+  setScore(score);
+}
+
+// Lorsqu'on gagne un jeu
+function gameWin() {
+  addPoint(); // Ajouter 1 point
+  loadNextGame(); // Charger le jeu suivant
+}
+
+
