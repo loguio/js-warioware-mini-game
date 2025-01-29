@@ -43,7 +43,7 @@ function startGame() {
             container.innerHTML = "Bravo, vous avez gagné ! 🎯";
         } else if (time <= 0) { // Fin si le temps s'écoule
             clearInterval(interval);
-            container.innerHTML = "Le jeu est terminé t'as raté t'es trop guez héhéhé HA";
+            container.innerHTML = "Le temps est écoulé, zute !";
         }
     }, 200); // Réduit le délai entre les spawns à 200ms
 
