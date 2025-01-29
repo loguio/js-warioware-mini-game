@@ -4,7 +4,7 @@ const words = [
     "neige", "vent", "mer", "riviere", "montagne", "foret", "champ", "village", "ville", "pont",
     "route", "train", "avion", "bateau", "moto", "camion", "velo", "chocolat", "pomme", "banane",
     "orange", "fraise", "cerise", "poire", "raisin", "legume", "carotte", "patate", "tomate", "poivron",
-    "fromage", "pain", "gâteau", "glace", "sucre", "sel", "poivre", "huile", "eau", "lait",
+    "fromage", "pain", "gateau", "glace", "sucre", "sel", "poivre", "huile", "eau", "lait",
     "cafe", "the", "biere", "vin", "jus", "peche", "abricot", "citron", "framboise", "ananas",
     "lumiere", "ombre", "ciel", "etoile", "nuage", "arbre", "fleur", "herbe", "oiseau", "papillon",
     "insecte", "poisson", "requin", "baleine", "cheval", "vache", "mouton", "cochon", "poule", "canard"
@@ -13,13 +13,13 @@ const words = [
 let currentWord = "";
 let userInput = "";
 let wordsCompleted = 0;
-let time = 10;
+let timerTapeMot = 10;
 let timerInterval;
 let gameActive = false;
 
 const currentWordElement = document.getElementById("current-word").querySelector("span");
 const userInputElement = document.getElementById("user-input").querySelector("span");
-const timerElement = document.getElementById("timer").querySelector("span");
+const timerElement = document.getElementById("timer-tape-mot").querySelector("span");
 const scoreElement = document.getElementById("score").querySelector("span");
 const endMessageElement = document.getElementById("end-message");
 
@@ -27,20 +27,8 @@ const endMessageElement = document.getElementById("end-message");
 function updateDisplay() {
     currentWordElement.textContent = gameActive ? currentWord : "";
     userInputElement.textContent = userInput;
-    timerElement.textContent = time;
+    timerElement.textContent = timerTapeMot;
     scoreElement.textContent = wordsCompleted;
-}
-
-// Réinitialise le jeu
-function resetGame() {
-    clearInterval(timerInterval);
-    time = 10;
-    userInput = "";
-    wordsCompleted = 0;
-    gameActive = false;
-    currentWord = "";
-    endMessageElement.textContent = "";
-    updateDisplay();
 }
 
 // Démarre un nouveau tour
@@ -50,9 +38,10 @@ function startRound() {
 
     // Timer
     timerInterval = setInterval(() => {
-        time--;
-        if (time <= 0) {
+        timerTapeMot--;
+        if (timerTapeMot <= 0) {
             clearInterval(timerInterval);
+            clearInterval(timerTapeMot);
             endGame(false);
         }
         updateDisplay();
@@ -70,6 +59,7 @@ function endGame(isWin) {
         : "Temps écoulé ! Perdu 😢";
 
     if (!isWin) {
+        clearInterval(timerTapeMot);
         loadNextGame(); // Passe au jeu suivant si le joueur a perdu
     }
 }
@@ -89,6 +79,7 @@ window.addEventListener("keydown", (e) => {
         wordsCompleted++;
         if (wordsCompleted >= 3) {
             endGame(true);
+            clearInterval(timerTapeMot)
             gameWin(); // Gagner
         } else {
             userInput = "";
@@ -99,8 +90,10 @@ window.addEventListener("keydown", (e) => {
     updateDisplay();
 });
 
-// Ajoute l'événement au bouton de démarrage
-startRound();
+setTimeout(() => {
+    startRound();
+}, 500);
+
 
 // Initialise l'affichage
 updateDisplay();

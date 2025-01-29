@@ -1,4 +1,3 @@
-console.log("Script numbers.js chargé, en attente des éléments du jeu...");
 
 // Vérification régulière que les éléments du DOM sont bien présents
 function waitForGameElements() {
@@ -6,12 +5,10 @@ function waitForGameElements() {
   let timerElement = document.getElementById("time");
 
   if (!gameContainer || !timerElement) {
-    console.warn("⏳ Éléments du jeu introuvables, nouvelle tentative...");
     setTimeout(waitForGameElements, 100);
     return;
   }
 
-  console.log("✅ Éléments du jeu trouvés, activation du jeu Numbers !");
   startNumbersGame(gameContainer, timerElement);
 }
 
@@ -20,7 +17,6 @@ function startNumbersGame(gameContainer, timerElement) {
   let numbers = [1, 2, 3, 4, 5, 6];
   let currentNumber = 1;
   let timeLeft = 10;
-  let timer = null;
 
   function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
@@ -93,13 +89,18 @@ function startNumbersGame(gameContainer, timerElement) {
   }
 
   function endGame(won) {
-    clearInterval(timer);
-    console.log(won ? "🎉 Bravo, vous avez gagné !" : "⏳ Temps écoulé !");
-    loadNextGame();
+    if (won) {
+      clearInterval(timer);
+      clearInterval(timeLeft);
+      gameWin(); // Appel de la fonction gameWin() si le joueur a gagné
+    } else {
+      clearInterval(timer);
+      clearInterval(timeLeft);
+      loadNextGame(); // Sinon, charger le prochain jeu
+    }
   }
 
   function startGame() {
-    console.log("🎲 Démarrage du jeu Numbers...");
     currentNumber = 1;
     timeLeft = 10;
     timerElement.textContent = timeLeft;

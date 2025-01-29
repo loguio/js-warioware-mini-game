@@ -52,13 +52,11 @@ let remainingGames = [
   { name: "cible", html: "./html/cible.html", js: "cible.js" },
   { name: "memories", html: "./html/memories.html", js: "memories.js" },
   { name: "jeuHoraire", html: "./html/jeuHoraire.html", js: "jeuHoraire.js" },
+  //{ name: "shadowBox", html: "./html/shadowBox.html", js: "shadowBox.js" },
+  { name: "taupeTap", html: "./html/taupeTap.html", js: "taupeTap.js" },
+  { name: "suiteNombre", html: "./html/suiteNombre.html", js: "suiteNombre.js"},
   { name: "powerwash", html: "./html/powerwash.html", js: "powerwash.js" },
-  { name: "shadowBox", html: "./html/shadowBox.html", js: "shadowBox.js" },
-  {
-    name: "suiteNombre",
-    html: "./html/suiteNombre.html",
-    js: "suiteNombre.js",
-  },
+  // { name: "shadowBox", html: "./html/shadowBox.html", js: "shadowBox.js" },
 ];
 
 
@@ -77,6 +75,7 @@ function loadScript(scriptSrc) {
 
 function loadGame(game,transition = false) {
   const gameContainer = document.getElementById("game-container");
+  gameContainer.innerHTML = "";
 
   fetch(game.html)
     .then((response) => {
@@ -177,6 +176,7 @@ function resetScore() {
 function addPoint() {
   let score = getScore();
   score += 1;
+  console.log(score);
   setScore(score);
 }
 
@@ -185,3 +185,5 @@ function gameWin() {
   addPoint(); // Ajouter 1 point
   loadNextGame(); // Charger le jeu suivant
 }
+
+resetScore();
