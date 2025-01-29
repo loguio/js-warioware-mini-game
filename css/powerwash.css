@@ -1,0 +1,97 @@
+.powerwash-container {
+    text-align: center;
+}
+
+.powerwash-title {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.powerwash-info {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.powerwash-surface {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    border: 2px solid #333;
+    background-color: white;
+    user-select: none;
+}
+
+.powerwash-pixel {
+    background-color: #8B4513;
+    transition: background-color 0.1s;
+}
+
+.powerwash-pixel-clean {
+    background-color: white;
+}
+
+.powerwash-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.powerwash-button:hover {
+    background-color: #45a049;
+}
+
+.powerwash-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.powerwash-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    min-width: 300px;
+}
+
+.powerwash-modal-title {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.powerwash-modal-message {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.powerwash-modal-button {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.powerwash-modal-button:hover {
+    background-color: #45a049;
+}

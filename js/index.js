@@ -49,6 +49,7 @@ let remainingGames = [
   { name: "cible", html: "./html/cible.html", js: "cible.js" },
   { name: "memories", html: "./html/memories.html", js: "memories.js" },
   { name: "jeuHoraire", html: "./html/jeuHoraire.html", js: "jeuHoraire.js" },
+  { name: "powerwash", html: "./html/powerwash.html", js: "powerwash.js" },
   { name: "shadowBox", html: "./html/shadowBox.html", js: "shadowBox.js" },
   {
     name: "suiteNombre",
