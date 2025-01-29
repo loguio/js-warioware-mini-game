@@ -10,7 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #BC629A;
-    font-family: "Play", serif;
+    font-family: "Press Start 2P", serif !important;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
@@ -30,9 +30,10 @@ body {
     justify-content: center;
     align-items: center;
     gap: 3.5rem;
-    background-color:#E6B229;
     border-radius: 12px;
     padding: 2rem;
+    background: url("../img/background.jpg");
+    border: 1rem solid rgba(0, 0, 0, 0.39);
 }
 
 #game-container {
@@ -40,43 +41,44 @@ body {
     height: 75%;
 }
 
-.wario-left {
-    width: 10rem;
-    height: 10rem;
-    position: absolute;
-    top: -3rem;
-    left: -3rem;
-}
-
-.wario-right {
-    width: 10rem;
-    height: 10rem;
-    position: absolute;
-    top: -3rem;
-    right: -3rem;
-}
-
 .main-title {
     color: #FFFFFF !important;
     height: 10rem;
-    font-size: 2.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 3rem;
+    font-weight: bold;
+    transform: translateY(-100%); /* Start above the screen */
+    animation: dropInBounce 2s ease-out forwards, snakeEffect 2s ease-in-out infinite;
+    animation-delay: 0s, 1s;
+  }
+
+@keyframes dropInBounce {
+    0% {
+        transform: translateY(-100%);
+    }
+    50% {
+        transform: translateY(10%)
+    }
+    70% {
+        transform: translateY(-5%);
+    }
+    90% {
+        transform: translateY(2%);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }
 
-.main-title span {
-    display: inline-block;
-    white-space: pre;
-    animation: snake 1.5s ease-in-out infinite;
-}
-
-@keyframes snake {
-    0% { transform: translateY(0); }
-    25% { transform: translateY(-25px); }
-    50% { transform: translateY(0); }
-    75% { transform: translateY(25px); }
-    100% { transform: translateY(0); }
+@keyframes snakeEffect {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px); /* Slight upward motion for the "wave" */
+    }
 }
 
 .main-content {
@@ -90,15 +92,15 @@ body {
 .main-content .main-button {
     width: 20rem;
     height: 5rem;
-    border: none;
+    border: 4px solid #808080d3;
     border-radius: 8px;
-    color: dodgerblue;
+    color: #E6B229;
     font-size: 20px;
     font-weight: 600;
 }
 
 .main-content .main-button:hover {
-    border: 4px solid #7c87a8cc;
+    border: 4px solid #E6B229;
     cursor: pointer;
     transform: scale(1.1);
 }

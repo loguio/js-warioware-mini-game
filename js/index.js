@@ -1,5 +1,13 @@
-const text = "RANDOM MINI-GAMES";
-const title = document.querySelector(".main-title");
+window.addEventListener('load', () => {
+  const title = document.querySelector('.title');
+  setTimeout(() => {
+    title.style.animation = 'dropInBounce 1s forwards';
+  }, 500);
+});
+
+document.querySelectorAll('.title span').forEach((span, index) => {
+  span.style.setProperty('--i', index);
+});
 
 let remainingGames = [
   // Liste dynamique des jeux restants
@@ -10,13 +18,6 @@ let remainingGames = [
   { name: "memories", html: "./html/memories.html", js: "memories.js" },
 ];
 
-// Affiche le titre comme un serpent qui bouge.
-text.split("").forEach((letter, index) => {
-  const span = document.createElement("span");
-  span.textContent = letter === " " ? " " : letter;
-  span.style.animationDelay = `${index * 0.1}s`;
-  title.appendChild(span);
-});
 
 function loadScript(scriptSrc) {
   const script = document.createElement("script");
