@@ -20,16 +20,37 @@
 
     <body>
         <main class="main-container">
-            <div id="game-container">
+            <div id="game-container" class="game-container">
                 <h1 id="main-title" class="main-title">RANDOM MINI-GAMES</h1>
 
                 <div class="main-content">
                     <button class="main-button">DÉMARRER LE JEU</button>
 
-                    <button class="main-button">PARAMÈTRES</button>
+                    <button class="main-button" onclick="loadSettings()">PARAMÈTRES</button>
                 </div>
                 
                 <div class="progress-block"></div>
+            </div>
+
+            <div class="settings-container">
+                <h1>PARAMETRES</h1>
+            
+                <div class="setting-item">
+                    <label for="volume">Volume</label>
+                    <input id="volume" class="volume-slider" type="range" min="0" max="100" value="50">
+                </div>
+            
+                <div class="setting-item toggle-container">
+                    <label for="sound-toggle">Son</label>
+                    <label class="toggle-switch">
+                    <input id="sound-toggle" type="checkbox" checked>
+                    <span class="slider"></span>
+                    </label>
+                </div>
+    
+                <a href="./index.html">
+                    <button class="back-button main-button">RETOUR</button>
+                </a>
             </div>
         </main>
 

@@ -1,13 +1,52 @@
 window.addEventListener('load', () => {
-  const title = document.querySelector('.title');
+  const title = document.querySelector('.main-title');
   setTimeout(() => {
-    title.style.animation = 'dropInBounce 1s forwards';
+    title.style.animation = 'dropInBounce 2s ease-out forwards, snakeEffect 2s ease-in-out infinite';
   }, 500);
 });
 
-document.querySelectorAll('.title span').forEach((span, index) => {
-  span.style.setProperty('--i', index);
+function loadSettings() {
+  const gameContainer = document.querySelector('.game-container');
+  const settingsContainer = document.querySelector('.settings-container');
+
+  gameContainer.style.display = 'none';
+  settingsContainer.style.display = 'flex';
+}
+
+
+const volumeSlider = document.getElementById('volume');
+const soundToggle = document.getElementById('sound-toggle');
+
+let isSoundOn = true;
+let currentVolume = 50;
+
+volumeSlider.addEventListener('input', (e) => {
+    currentVolume = e.target.value;
+    console.log(`Volume set to: ${currentVolume}%`);
+
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+    audio.volume = currentVolume / 100;
+    });
 });
+
+soundToggle.addEventListener('change', (e) => {
+    isSoundOn = e.target.checked;
+    console.log(`Sound is ${isSoundOn ? 'ON' : 'OFF'}`);
+
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+    audio.muted = !isSoundOn;
+    });
+});
+
+const testAudio = document.createElement('audio');
+testAudio.src = './audio/musique.mp3';
+testAudio.loop = true;
+document.body.appendChild(testAudio);
+
+testAudio.play();
+
 
 let remainingGames = [
   // Liste dynamique des jeux restants
@@ -79,3 +118,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.querySelector(".main-button");
   startButton.addEventListener("click", launchRandomGame);
 });
+
