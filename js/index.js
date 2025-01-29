@@ -50,6 +50,11 @@ let remainingGames = [
   { name: "memories", html: "./html/memories.html", js: "memories.js" },
   { name: "jeuHoraire", html: "./html/jeuHoraire.html", js: "jeuHoraire.js" },
   { name: "shadowBox", html: "./html/shadowBox.html", js: "shadowBox.js" },
+  {
+    name: "suiteNombre",
+    html: "./html/suiteNombre.html",
+    js: "suiteNombre.js",
+  },
 ];
 
 
