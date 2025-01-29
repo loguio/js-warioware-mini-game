@@ -1,17 +1,4 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', 'sans-serif';
-}
 
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-position: center;
-    background-size: cover;
-}
 
 .game_infos {
     display: flex;
@@ -41,7 +28,7 @@ body {
     animation: animateTarget 10s infinite;
 }
 
-button {
+.start_btn {
     padding: 10px 20px;
     margin-bottom: 20px;
     background-color: #3C7103;

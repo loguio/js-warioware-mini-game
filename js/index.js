@@ -34,25 +34,39 @@ function loadScript(scriptSrc) {
 function loadGame(game) {
   const gameContainer = document.getElementById("game-container");
 
-  fetch(game.html)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          "Erreur lors du chargement du jeu : " + response.statusText
-        );
-      }
-      return response.text();
-    })
-    .then((html) => {
-      gameContainer.innerHTML = html;
-      loadScript("./js/" + game.js);
-    })
-    .catch((error) => {
-      console.error(error);
-      gameContainer.innerHTML =
-        "<p>Impossible de charger le jeu. Veuillez réessayer.</p>";
-    });
+    fetch(game.html)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors du chargement du jeu : ' + response.statusText);
+            }
+            return response.text();
+        })
+        .then(html => {
+            gameContainer.innerHTML = html; // Injection du jeu
+
+            // Supprimer tout script existant pour éviter les doublons
+            const oldScript = document.getElementById('game-script');
+            if (oldScript) {
+                oldScript.remove();
+            }
+
+            // Charger dynamiquement le script du jeu après l’injection du HTML
+            const script = document.createElement('script');
+            script.src = "./js/" + game.js;
+            script.id = "game-script";
+            script.type = "text/javascript";
+            script.onload = () => console.log(`Script ${game.js} chargé avec succès.`);
+            script.onerror = () => console.error(`Erreur lors du chargement du script ${game.js}.`);
+
+            document.body.appendChild(script); // Ajouter le script au DOM
+        })
+        .catch(error => {
+            console.error(error);
+            gameContainer.innerHTML = '<p>Impossible de charger le jeu. Veuillez réessayer.</p>';
+        });
 }
+
+
 
 function loadNextGame() {
   if (remainingGames.length > 0) {
