@@ -38,6 +38,7 @@ btn.onclick = function () {
         if (score >= 6) { // Fin si le score atteint 6
             clearInterval(interval);
             container.innerHTML = "Bravo, vous avez gagné ! 🎯";
+            loadNextGame();
         } else if (time <= 0) { // Fin si le temps s'écoule
             clearInterval(interval);
             container.innerHTML = "Le jeu est terminé t'as raté t'es trop guez héhéhé HA";
