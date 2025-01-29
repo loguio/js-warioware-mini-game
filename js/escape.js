@@ -1,4 +1,3 @@
-const cDisplay = document.getElementById("c");
 
 // Positionner la safe zone aléatoirement
 function positionsafeZone() {
@@ -32,6 +31,8 @@ function isMouseInsafeZone(event) {
 // Initialiser le jeu
 function startGameArea() {
     const gameArea = document.getElementById("game-area");
+    const cDisplay = document.getElementById("c");
+
     positionsafeZone();
 
     let c = 3;
@@ -46,9 +47,9 @@ function startGameArea() {
             gameArea.removeEventListener("mousemove", handleMouseMove);
 
             if (!mouseInsafeZone) {
-                alert("Défaite");
+                loadNextGame(); // Passe au jeu suivant
             } else {
-                alert("Victoire");
+                gameWin(); // Passe au jeu suivant
             }
         }
     }, 1000);
@@ -65,4 +66,4 @@ function startGameArea() {
 // Lancer le jeu au chargement de la page
 setTimeout(() => {
     startGameArea();
-  }, "500");
+  }, "1000");

@@ -41,6 +41,9 @@ soundToggle.addEventListener('change', (e) => {
 });
 
 
+let transition =  { name: "transition", html: "./html/transition.html", js: "transition.js" }
+
+
 let remainingGames = [
   // Liste dynamique des jeux restants
   { name: "escape", html: "./html/escape.html", js: "escape.js" },
@@ -72,7 +75,7 @@ function loadScript(scriptSrc) {
   document.body.appendChild(script);
 }
 
-function loadGame(game) {
+function loadGame(game,transition = false) {
   const gameContainer = document.getElementById("game-container");
 
   fetch(game.html)
@@ -112,9 +115,14 @@ function loadGame(game) {
     });
 }
 
-function loadNextGame() {
+function loadNextGame(isTransition  = true) {
+  console.log(isTransition)
   if (remainingGames.length > 0) {
     // Sélectionner un jeu aléatoire parmi les jeux restants
+    if(isTransition){
+      loadGame(transition)
+      return
+    }
     const randomIndex = Math.floor(Math.random() * remainingGames.length);
     const nextGame = remainingGames.splice(randomIndex, 1)[0]; // Retirer le jeu sélectionné
     loadGame(nextGame);
