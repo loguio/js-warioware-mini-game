@@ -48,18 +48,13 @@ function startGame() {
 function endGame() {
     gameActive = false;
     if (molesHit >= molesToHit) {
-        alert('You win! You hit all the moles!');
+        alert('Gagné !');
     } else {
-        alert('Game Over! You missed some moles.');
+        alert('Perdu !');
     }
 }
 
 holes.forEach(hole => {
-    hole.addEventListener('click', () => {
-        if (!gameActive) return;
-        molesHit++;
-    });
-
     const mole = hole.querySelector('.mole');
     hole.addEventListener('click', () => {
         if (!mole.classList.contains('show') || !gameActive) return;
