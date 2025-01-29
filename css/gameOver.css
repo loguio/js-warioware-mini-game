@@ -21,7 +21,12 @@
 }
 
 .over-content a {
-    all: unset
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
 .over-content .button-retry {
