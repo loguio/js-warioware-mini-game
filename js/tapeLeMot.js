@@ -93,6 +93,7 @@ window.addEventListener("keydown", (e) => {
         wordsCompleted++;
         if (wordsCompleted >= 3) {
             endGame(true);
+            loadNextGame();
         } else {
             userInput = "";
             currentWord = words[Math.floor(Math.random() * words.length)];
