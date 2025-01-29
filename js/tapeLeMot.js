@@ -22,7 +22,6 @@ const userInputElement = document.getElementById("user-input").querySelector("sp
 const timerElement = document.getElementById("timer").querySelector("span");
 const scoreElement = document.getElementById("score").querySelector("span");
 const endMessageElement = document.getElementById("end-message");
-const startButton = document.getElementById("start-button");
 
 // Met à jour l'affichage des éléments
 function updateDisplay() {
@@ -41,14 +40,12 @@ function resetGame() {
     gameActive = false;
     currentWord = "";
     endMessageElement.textContent = "";
-    startButton.style.display = "block";
     updateDisplay();
 }
 
 // Démarre un nouveau tour
 function startRound() {
     gameActive = true;
-    startButton.style.display = "none";
     currentWord = words[Math.floor(Math.random() * words.length)];
 
     // Timer
@@ -72,10 +69,9 @@ function endGame(isWin) {
         ? "Félicitations ! Vous avez gagné 🎉"
         : "Temps écoulé ! Perdu 😢";
 
-    const restartButton = document.createElement("button");
-    restartButton.textContent = "Recommencer";
-    restartButton.addEventListener("click", resetGame);
-    endMessageElement.appendChild(restartButton);
+    if (!isWin) {
+        loadNextGame(); // Passe au jeu suivant si le joueur a perdu
+    }
 }
 
 // Gère les entrées clavier
@@ -93,6 +89,7 @@ window.addEventListener("keydown", (e) => {
         wordsCompleted++;
         if (wordsCompleted >= 3) {
             endGame(true);
+            gameWin(); // Gagner
         } else {
             userInput = "";
             currentWord = words[Math.floor(Math.random() * words.length)];
@@ -103,7 +100,7 @@ window.addEventListener("keydown", (e) => {
 });
 
 // Ajoute l'événement au bouton de démarrage
-startButton.addEventListener("click", startRound);
+startRound();
 
 // Initialise l'affichage
 updateDisplay();
