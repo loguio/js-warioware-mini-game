@@ -8,6 +8,7 @@ let remainingGames = [
   { name: "sigma", html: "./html/sigma.html", js: "sigma.js" },
   { name: "cible", html: "./html/cible.html", js: "cible.js" },
   { name: "memories", html: "./html/memories.html", js: "memories.js" },
+  { name: "jeuHoraire", html: "./html/jeuHoraire.html", js: "jeuHoraire.js" },
 ];
 
 // Affiche le titre comme un serpent qui bouge.
