@@ -1,5 +1,45 @@
-const text = "RANDOM MINI-GAMES";
-const title = document.querySelector(".main-title");
+window.addEventListener('load', () => {
+  const title = document.querySelector('.main-title');
+  setTimeout(() => {
+    title.style.animation = 'dropInBounce 2s ease-out forwards, snakeEffect 2s ease-in-out infinite';
+  }, 500);
+});
+
+function loadSettings() {
+  const gameContainer = document.querySelector('.game-container');
+  const settingsContainer = document.querySelector('.settings-container');
+
+  gameContainer.style.display = 'none';
+  settingsContainer.style.display = 'flex';
+}
+
+
+const volumeSlider = document.getElementById('volume');
+const soundToggle = document.getElementById('sound-toggle');
+
+let isSoundOn = true;
+let currentVolume = 50;
+
+volumeSlider.addEventListener('input', (e) => {
+    currentVolume = e.target.value;
+    console.log(`Volume set to: ${currentVolume}%`);
+
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+    audio.volume = currentVolume / 100;
+    });
+});
+
+soundToggle.addEventListener('change', (e) => {
+    isSoundOn = e.target.checked;
+    console.log(`Sound is ${isSoundOn ? 'ON' : 'OFF'}`);
+
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+    audio.muted = !isSoundOn;
+    });
+});
+
 
 let remainingGames = [
   // Liste dynamique des jeux restants
@@ -17,13 +57,6 @@ let remainingGames = [
   },
 ];
 
-// Affiche le titre comme un serpent qui bouge.
-text.split("").forEach((letter, index) => {
-  const span = document.createElement("span");
-  span.textContent = letter === " " ? " " : letter;
-  span.style.animationDelay = `${index * 0.1}s`;
-  title.appendChild(span);
-});
 
 function loadScript(scriptSrc) {
   const script = document.createElement("script");
@@ -107,6 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.querySelector(".main-button");
   startButton.addEventListener("click", launchRandomGame);
 });
+
 
 // Sytème de point
 function getScore() {
