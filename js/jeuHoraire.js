@@ -11,7 +11,7 @@ const timerDisplay = document.getElementById("timer");
 
 // Variables pour les angles de l'horloge fixe
 const fixedHourAngle = Math.floor(Math.random() * 12) * 30; // Angle aléatoire
-const fixedMinuteAngle = 0;
+const fixedMinuteAngle = Math.floor(Math.random() * 60) * 6;
 
 // Variables pour la gestion du drag et du timer
 let isDragging = false;
@@ -56,10 +56,13 @@ function onDrag(event) {
 
   if (x !== undefined && y !== undefined) {
     hourAngle = getAngleFromCoordinates(x, y, centerX, centerY);
+    minuteAngle = (hourAngle % 30) * 2 * 6; // Correction du calcul des minutes
+
     updateClock(adjustableHourHand, adjustableMinuteHand, {
-      hour: Math.floor(hourAngle / 30), // Chaque 30° correspond à une heure
-      minute: Math.floor((hourAngle % 30) * 2),
+      hour: Math.floor(hourAngle / 30),
+      minute: Math.floor(minuteAngle / 6),
     });
+
     checkIfCorrect();
   }
 }
@@ -75,33 +78,35 @@ function updateClock(hourHand, minuteHand, time) {
 
 // Fonction pour vérifier si l'heure est correcte
 function checkIfCorrect() {
-    const correctHour = fixedHourAngle / 30;
-    const correctMinute = fixedMinuteAngle / 6;
-  
-    // Marge d'erreur de 5 minutes (30°) pour les minutes
-    const marginOfError = 30; // 30° = 5 minutes
+  const correctHour = fixedHourAngle / 30;
+  const correctMinute = fixedMinuteAngle / 6;
 
-    // Vérification des heures et des minutes avec une tolérance pour les minutes
-    const isHourCorrect = Math.floor(hourAngle / 30) === correctHour;
-    const isMinuteCorrect = Math.abs(minuteAngle - correctMinute) <= marginOfError;
+  // Marge d'erreur de 5 minutes (30°) pour les minutes
+  const marginOfError = 30; // 30° = 5 minutes
 
-    if (isHourCorrect && isMinuteCorrect) {
-        // Si l'heure et les minutes sont correctes avec la marge d'erreur, activer le timer de 1 seconde pour vérifier
-        if (!validationTimeout && !isValid) {
-            validationTimeout = setTimeout(() => {
-                stopTimer(); // Arrêter le timer
-                result.textContent = "Heure validée ! Vous avez gagné !";
-                isValid = true;  // L'heure est maintenant validée
-                disableDrag();  // Désactiver le drag
-            }, 1000);
-        }
-    } else {
-        // Annuler le timeout si l'heure ou les minutes sont modifiées
-        if (validationTimeout) {
-            clearTimeout(validationTimeout);
-            validationTimeout = null;
-        }
-    }
+  // Vérification des heures et des minutes avec une tolérance pour les minutes
+  const isHourCorrect = Math.floor(hourAngle / 30) === correctHour;
+  const isMinuteCorrect = Math.abs(minuteAngle - fixedMinuteAngle) <= marginOfError;
+
+  console.log("isMinuteCorrect:", isMinuteCorrect);
+  console.log("correctMinute:", correctMinute);
+  console.log("minuteAngle:", minuteAngle);
+
+  if (isHourCorrect && isMinuteCorrect) {
+      if (!validationTimeout && !isValid) {
+          validationTimeout = setTimeout(() => {
+              stopTimer();
+              result.textContent = "Heure validée ! Vous avez gagné !";
+              isValid = true;
+              disableDrag();
+          }, 1000);
+      }
+  } else {
+      if (validationTimeout) {
+          clearTimeout(validationTimeout);
+          validationTimeout = null;
+      }
+  }
 }
 
 
