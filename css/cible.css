@@ -4,15 +4,6 @@
     font-family: "Press Start 2P", serif;
 }
 
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-position: center;
-    background-size: cover;
-}
-
 .game_infos {
     display: flex;
     justify-content: space-between;
@@ -41,7 +32,7 @@ body {
     animation: animateTarget 10s infinite;
 }
 
-button {
+.start_btn {
     padding: 10px 20px;
     margin-bottom: 20px;
     background-color: #3C7103;

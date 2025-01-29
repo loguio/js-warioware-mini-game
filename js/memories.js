@@ -1,7 +1,6 @@
 const cards = ["pomme", "pomme", "poire", "poire", "peche", "peche"];
 let shuffledCards = [];
 let visibleCardIndex = null; // L'index de la carte visible
-let gameActive = false; // Indique si le jeu est actif
 let timer = 5;
 
 const gameBoard = document.getElementById("game-board");
@@ -81,16 +80,19 @@ function handleCardClick(cardElement) {
 
   setTimeout(() => {
     if (clickedValue === visibleValue) {
-      // Bonne paire
-      alert("Victory! You found the pair!");
+      // Gagner
+      gameWin(); // Passe au jeu suivant
     } else {
-      // Mauvaise paire
-      alert("Defeat! Wrong card.");
+      // Perdu
+      loadNextGame(); // Passe au jeu suivant
     }
     gameActive = false; // Terminer le jeu après un clic
   }, 500); // Afficher la carte cliquée pendant 500ms
 }
 
 // Démarrer le jeu
-createBoard();
-startTimer();
+setTimeout(() => {
+  createBoard();
+  startTimer();
+}, 500);
+
