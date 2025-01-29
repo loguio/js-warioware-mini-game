@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -7,38 +7,38 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f4f4f9;
-}
+} */
 
 .timer {
-    font-size: 40px; /* Texte du timer plus grand */
-    margin-bottom: 40px; /* Plus d'espace en bas */
+  font-size: 40px; /* Texte du timer plus grand */
+  margin-bottom: 40px; /* Plus d'espace en bas */
 }
 
 .game-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Grille avec 3 colonnes */
-    gap: 20px; /* Espace entre les cartes */
-    width: 80vw; /* Plateau plus large */
-    max-width: 800px; /* Limite de largeur */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Grille avec 3 colonnes */
+  gap: 20px; /* Espace entre les cartes */
+  width: 50vw; /* Plateau plus large */
+  max-width: 800px; /* Limite de largeur */
 }
 
 .card {
-    width: 100%; /* Ajustement automatique à la grille */
-    height: 25vw; /* Hauteur proportionnelle */
-    max-height: 250px; /* Limite de hauteur */
-    background-color: #777;
-    border-radius: 16px; /* Coins arrondis plus grands */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 36px; /* Texte plus grand */
-    cursor: pointer;
-    background-size: cover;
-    background-position: center;
+  width: 80%; /* Ajustement automatique à la grille */
+  height: 12vw; /* Hauteur proportionnelle */
+  max-height: 250px; /* Limite de hauteur */
+  background-color: #777;
+  border-radius: 16px; /* Coins arrondis plus grands */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 36px; /* Texte plus grand */
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
 }
 
 .hidden {
-    background-image: url('../img/dos.jpg');
-    color: transparent;
+  background-image: url("../img/dos.jpg");
+  color: transparent;
 }
