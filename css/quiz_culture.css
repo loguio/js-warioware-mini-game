@@ -1,0 +1,122 @@
+/*body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}*/
+
+header {
+    width: 100%;
+    height: 50px;
+    background: #03346E;
+    color: white;
+    padding: 0 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 13px;
+}
+
+.logo-div {
+    width: 40px;
+    height: 40px;
+}
+
+#logo {
+    width: 100%;
+}
+
+#nav-link {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 25px;
+}
+
+#nav-link:hover {
+    color: #03346E;
+    background: white;
+    transition: ease-in-out 0.3s;
+}
+
+section {
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    margin-top: 0;
+}
+
+.div-1 {
+    padding-top: -5rem;
+}
+
+.div-1 h1 {
+    margin: 0;
+    color: white;
+    font-style: italic;
+    font-family: "Dancing Script", serif;
+    font-optical-sizing: auto;
+}
+
+#imageQuiz {
+    width: 15rem;
+    height: 15rem;
+}
+
+.div-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#startButton {
+    width: 150px;
+    height: 30px;
+    background: #03346E;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+#quizContainer {
+
+}
+
+#btnOption {
+    border: solid 0.5px gray;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+#btnOption:hover{
+    transform: scale(1);
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+#optionsContainer {
+    display: flex;
+    gap: 1rem;
+}
+
+#timer {
+    visibility: hidden;
+}
+
+footer {
+    width: 100%;
+    height: 50px;
+    background: #03346E;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
