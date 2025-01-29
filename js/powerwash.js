@@ -16,8 +16,8 @@ function waitForGameElements() {
 }
 
 function startPowerwashGame(surface, progressSpan, timerSpan) {
-    const GRID_SIZE = 20;
-    const GAME_DURATION = 35;
+    const GRID_SIZE = 10;
+    const GAME_DURATION = 30;
 
     let isMouseDown = false;
     let cleanPixels = 0;
@@ -44,6 +44,8 @@ function startPowerwashGame(surface, progressSpan, timerSpan) {
         isGameActive = false;
 
         if (isVictory) {
+            gameWin();
+        } else {
             loadNextGame();
         }
     }
