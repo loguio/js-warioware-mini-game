@@ -28,6 +28,6 @@
 }
 
 .hidden {
-  background-image: url("../img/dos.jpg");
+  background-image: url("./img/dos.jpg");
   color: transparent;
 }
