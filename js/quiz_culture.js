@@ -193,12 +193,12 @@ function showQuestion() {
             defineCityNameStyle("yellow")
             cityNameDiv.style.backgroundColor = "yellow";
             endQuiz();
-            clearInterval(timer);
         }, 5000);
     } else {
         alert("Quiz terminé !");
         //startButton.textContent = 'Start';
         clearInterval(timer);
+        clearTimeout(timer);
     }
 }
 
@@ -211,7 +211,7 @@ function checkAnswer(selected, trueCountry, button) {
         defineCityNameStyle("green")
         //cityNameDiv.style.backgroundColor = "green"; // Vert si correct
         currentQuestionIndex++;
-        setTimeout(showQuestion, 1000); // Attendre 1 seconde avant de montrer la prochaine question
+        setTimeout(showQuestion, 500); // Attendre 1 seconde avant de montrer la prochaine question
     } else {
         button.style.backgroundColor = "red";
         defineCityNameStyle("red")
@@ -262,6 +262,7 @@ function endQuiz() {
     optionsContainer.innerHTML = ''; // Supprimer les options
     //startButton.style.display = 'block'; // Montrer le bouton Start
     clearInterval(timer);
+    clearTimeout(timer);
 }
 
 /*startButton.onclick = () => {
