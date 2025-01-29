@@ -1,56 +1,86 @@
-let container = document.querySelector('.container');
-let btn = document.querySelector('.start_btn');
-let scoreContainer = document.querySelector('.score');
-let timeContainer = document.querySelector('.time');
+console.log("Script cible.js chargé, en attente des éléments du jeu...");
 
-btn.onclick = function () {
+// Vérification régulière que les éléments du DOM sont bien présents
+function waitForGameElements() {
+    let container = document.querySelector('.container');
+    let scoreContainer = document.querySelector('.score');
+    let timeContainer = document.querySelector('.time');
+
+    if (!container  || !scoreContainer || !timeContainer) {
+        console.warn("⏳ Éléments du jeu introuvables, nouvelle tentative...");
+        setTimeout(waitForGameElements, 100);
+        return;
+    }
+
+    console.log("✅ Éléments du jeu trouvés, activation du bouton Start !");
+    startCibleGame(container, scoreContainer, timeContainer);
+}
+
+// Fonction qui gère le jeu et l'activation du bouton Start
+function startCibleGame(container, scoreContainer, timeContainer) {
     let score = 0;
-    let time = 10; // Temps de départ
-    container.innerHTML = "";
+    let time = 10;
+    let interval = null;
+    let timer = null;
 
-    // Intervalle rapide pour spawner les cibles (200ms)
-    let interval = setInterval(function showTarget() {
-        let target = document.createElement('img');
-        target.id = "target";
-        target.src = "../img/cible.png";
-        container.appendChild(target);
+    function startGame() {
+        console.log("🎯 Démarrage du jeu Cible...");
 
-        // Positionnement aléatoire
-        target.style.top = Math.random() * (500 - target.offsetHeight) + 'px';
-        target.style.left = Math.random() * (600 - target.offsetWidth) + 'px';
-
-        // Retirer automatiquement la cible après 2 secondes
-        setTimeout(function () {
-            target.remove();
-        }, 2000);
-
-        // Si le joueur clique sur la cible
-        target.onclick = function () {
-            score += 1;
-            target.style.display = 'none'; // Masquer immédiatement
-        };
-
-        // Mettre à jour le score et le temps
+        // Réinitialisation des valeurs
+        score = 0;
+        time = 10;
         scoreContainer.innerHTML = `Score : ${score}`;
         timeContainer.innerHTML = `Temps : ${time}`;
+        container.innerHTML = "";
 
-        // Conditions d'arrêt du jeu
-        if (score >= 6) { // Fin si le score atteint 6
-            clearInterval(interval);
-            container.innerHTML = "Bravo, vous avez gagné ! 🎯";
-            loadNextGame();
-        } else if (time <= 0) { // Fin si le temps s'écoule
-            clearInterval(interval);
-            container.innerHTML = "Le jeu est terminé t'as raté t'es trop guez héhéhé HA";
-        }
-    }, 200); // Réduit le délai entre les spawns à 200ms
+        // Nettoyage des timers si jamais ils étaient encore actifs
+        if (interval) clearInterval(interval);
+        if (timer) clearInterval(timer);
 
-    // Timer pour décrémenter le temps restant
-    let timer = setInterval(function () {
-        time -= 1;
-        timeContainer.innerHTML = `Temps : ${time}`;
-        if (time <= 0) {
-            clearInterval(timer);
-        }
-    }, 1000);
-};
+        // Spawn des cibles
+        interval = setInterval(() => {
+            let target = document.createElement('img');
+            target.id = "target";
+            target.src = "./img/cible.png";
+            target.style.position = "absolute";
+            target.style.top = Math.random() * (500 - 50) + 'px';
+            target.style.left = Math.random() * (600 - 50) + 'px';
+            container.appendChild(target);
+
+            setTimeout(() => target.remove(), 2000);
+
+            target.onclick = function () {
+                score += 1;
+                target.style.display = 'none';
+                scoreContainer.innerHTML = `Score : ${score}`;
+            };
+
+            timeContainer.innerHTML = `Temps : ${time}`;
+
+            if (score >= 6) {
+                clearInterval(interval);
+                clearInterval(timer);
+                container.innerHTML = "🎉 Bravo, vous avez gagné !";
+                setTimeout(loadNextGame, 2000);
+            } else if (time <= 0) {
+                clearInterval(interval);
+                container.innerHTML = "😆 Le jeu est terminé, t'as raté !";
+            }
+        }, 200);
+
+        // Gestion du temps
+        timer = setInterval(() => {
+            time -= 1;
+            timeContainer.innerHTML = `Temps : ${time}`;
+            if (time <= 0) {
+                clearInterval(timer);
+            }
+        }, 1000);
+    }
+
+    // Ajout du listener au bouton Start (évite de l'ajouter plusieurs fois)
+    startGame()
+}
+
+// Démarrer la vérification des éléments du jeu
+waitForGameElements();
