@@ -148,13 +148,27 @@ const cityName = document.getElementById('cityName');
 const cityNameDiv = document.getElementById('cityName-div');
 const optionsContainer = document.getElementById('optionsContainer');
 const startButton = document.getElementById('startButton');
-const timerElement = document.getElementById('timer');
+let elapsedTime = 0;
+const timerValue = document.getElementById('timerValue');
 
-function startQuiz() {
+/*function startQuiz() {
     currentQuestionIndex = 0;
     defineCityNameStyle("#fff")
     //cityNameDiv.style.backgroundColor = "#fff"; // Réinitialiser la couleur
     showQuestion();
+}*/
+
+function startQuiz() {
+    currentQuestionIndex = 0;
+    elapsedTime = 0; // Réinitialiser le temps écoulé
+    timerValue.innerHTML = elapsedTime; // Réinitialiser l'affichage du timer
+    defineCityNameStyle("#fff");
+    showQuestion();
+
+    timer = setInterval(() => {
+        elapsedTime++;
+        timerValue.innerHTML = elapsedTime; // Mettre à jour le timer
+    }, 1000);
 }
 
 function showQuestion() {
@@ -175,21 +189,23 @@ function showQuestion() {
 
         // Changer la couleur après 3 secondes si aucune réponse
         // Jaune si pas de réponse
-        timer = setTimeout(() => {
+        setTimeout(() => {
             defineCityNameStyle("yellow")
             cityNameDiv.style.backgroundColor = "yellow";
             endQuiz();
-        }, 3000);
-
-        timerElement.innerHTML = timer;
+            clearInterval(timer);
+        }, 5000);
     } else {
         alert("Quiz terminé !");
-        startButton.textContent = 'Start';
+        //startButton.textContent = 'Start';
+        clearInterval(timer);
     }
 }
 
 function checkAnswer(selected, trueCountry, button) {
     clearTimeout(timer); // Arrêter le timer
+    clearInterval(timer); // Arrêter le timer de compt
+
     if (selected === trueCountry) {
         button.style.backgroundColor = "green";
         defineCityNameStyle("green")
@@ -218,7 +234,7 @@ function defineCityNameStyle(color) {
 
     if (color === "red"){
         cityNameDiv.style.backgroundColor = "red";
-        startButton.textContent = 'Restart';
+        //startButton.textContent = 'Restart';
     }
 
     if (color === "#fff"){
@@ -227,7 +243,7 @@ function defineCityNameStyle(color) {
 
     if (color === "yellow"){
         cityNameDiv.style.backgroundColor = "yellow";
-        startButton.textContent = 'Restart';
+        //startButton.textContent = 'Restart';
     }
 
     if (color === "RAS"){
@@ -238,15 +254,19 @@ function defineCityNameStyle(color) {
         cityNameDiv.style.marginBottom = '0';
         cityNameDiv.style.textAlign = 'center';
         cityNameDiv.style.backgroundColor = "none";
+        
     }
 }
 
 function endQuiz() {
     optionsContainer.innerHTML = ''; // Supprimer les options
-    startButton.style.display = 'block'; // Montrer le bouton Start
+    //startButton.style.display = 'block'; // Montrer le bouton Start
+    clearInterval(timer);
 }
 
-startButton.onclick = () => {
+/*startButton.onclick = () => {
     startButton.style.display = 'none'; // Cacher le bouton Start
     startQuiz();
-};
+};*/
+
+startQuiz();
