@@ -1,10 +1,11 @@
 const text = "RANDOM MINI-GAMES";
 const title = document.querySelector('.main-title');
 
-const games = [
+let remainingGames = [ // Liste dynamique des jeux restants
     { name: 'escape', html: './html/escape.html', js: 'escape.js' },
     { name: 'tapeLeMot', html: './html/tapeLeMot.html', js: 'tapeLeMot.js' },
     { name: 'sigma', html: './html/sigma.html', js: 'sigma.js' },
+    { name: 'cible', html: './html/cible.html', js: 'cible.js' },
 ];
 
 // Affiche le titre comme un serpent qui bouge.
@@ -25,23 +26,22 @@ function loadScript(scriptSrc) {
     script.onerror = () => {
         console.error(`Erreur lors du chargement du script ${scriptSrc}.`);
     };
-    document.body.appendChild(script); // Ajoute le script à la page
+    document.body.appendChild(script);
 }
 
 function loadGame(game) {
     const gameContainer = document.getElementById('game-container');
 
-    // Charger le fichier HTML avec fetch
     fetch(game.html)
         .then((response) => {
             if (!response.ok) {
                 throw new Error('Erreur lors du chargement du jeu : ' + response.statusText);
             }
-            return response.text(); // Extraire le contenu du fichier HTML
+            return response.text();
         })
         .then((html) => {
-            gameContainer.innerHTML = html; // Insérer le contenu dans la div
-            loadScript("./js/" + game.js); // Charger le script associé au jeu
+            gameContainer.innerHTML = html;
+            loadScript("./js/" + game.js);
         })
         .catch((error) => {
             console.error(error);
@@ -49,13 +49,26 @@ function loadGame(game) {
         });
 }
 
-function launchRandomGame() {
-    const randomGame = games[Math.floor(Math.random() * games.length)];
-    loadGame(randomGame);
+function loadNextGame() {
+    if (remainingGames.length > 0) {
+        // Sélectionner un jeu aléatoire parmi les jeux restants
+        const randomIndex = Math.floor(Math.random() * remainingGames.length);
+        const nextGame = remainingGames.splice(randomIndex, 1)[0]; // Retirer le jeu sélectionné
+        loadGame(nextGame);
+    } else {
+        const gameContainer = document.getElementById('game-container');
+        gameContainer.innerHTML = '<h1>🎉 Félicitations, vous avez terminé tous les jeux !</h1>';
+    }
 }
 
-// Associe la fonction au bouton "DÉMARRER LE JEU"
+function launchRandomGame() {
+    // Charger un jeu aléatoire au début
+    const randomIndex = Math.floor(Math.random() * remainingGames.length);
+    const initialGame = remainingGames.splice(randomIndex, 1)[0]; // Retirer le jeu initial
+    loadGame(initialGame);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const startButton = document.querySelector('.main-button'); // Bouton "DÉMARRER LE JEU"
+    const startButton = document.querySelector('.main-button');
     startButton.addEventListener('click', launchRandomGame);
 });
