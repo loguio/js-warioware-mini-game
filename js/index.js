@@ -9,6 +9,7 @@ let remainingGames = [
   { name: "cible", html: "./html/cible.html", js: "cible.js" },
   { name: "memories", html: "./html/memories.html", js: "memories.js" },
   { name: "jeuHoraire", html: "./html/jeuHoraire.html", js: "jeuHoraire.js" },
+  { name: "shadowBox", html: "./html/shadowBox.html", js: "shadowBox.js" },
 ];
 
 // Affiche le titre comme un serpent qui bouge.
@@ -35,38 +36,42 @@ function loadScript(scriptSrc) {
 function loadGame(game) {
   const gameContainer = document.getElementById("game-container");
 
-    fetch(game.html)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erreur lors du chargement du jeu : ' + response.statusText);
-            }
-            return response.text();
-        })
-        .then(html => {
-            gameContainer.innerHTML = html; // Injection du jeu
+  fetch(game.html)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          "Erreur lors du chargement du jeu : " + response.statusText
+        );
+      }
+      return response.text();
+    })
+    .then((html) => {
+      gameContainer.innerHTML = html; // Injection du jeu
 
-            // Supprimer tout script existant pour éviter les doublons
-            const oldScript = document.getElementById('game-script');
-            if (oldScript) {
-                oldScript.remove();
-            }
+      // Supprimer tout script existant pour éviter les doublons
+      const oldScript = document.getElementById("game-script");
+      if (oldScript) {
+        oldScript.remove();
+      }
 
-            // Charger dynamiquement le script du jeu après l’injection du HTML
-            const script = document.createElement('script');
-            script.src = "./js/" + game.js;
-            script.id = "game-script";
-            script.type = "text/javascript";
-            script.onload = () => console.log(`Script ${game.js} chargé avec succès.`);
-            script.onerror = () => console.error(`Erreur lors du chargement du script ${game.js}.`);
+      // Charger dynamiquement le script du jeu après l’injection du HTML
+      const script = document.createElement("script");
+      script.src = "./js/" + game.js;
+      script.id = "game-script";
+      script.type = "text/javascript";
+      script.onload = () =>
+        console.log(`Script ${game.js} chargé avec succès.`);
+      script.onerror = () =>
+        console.error(`Erreur lors du chargement du script ${game.js}.`);
 
-            document.body.appendChild(script); // Ajouter le script au DOM
-        })
-        .catch(error => {
-            console.error(error);
-            gameContainer.innerHTML = '<p>Impossible de charger le jeu. Veuillez réessayer.</p>';
-        });
+      document.body.appendChild(script); // Ajouter le script au DOM
+    })
+    .catch((error) => {
+      console.error(error);
+      gameContainer.innerHTML =
+        "<p>Impossible de charger le jeu. Veuillez réessayer.</p>";
+    });
 }
-
 
 function loadNextGame() {
   if (remainingGames.length > 0) {
@@ -77,8 +82,12 @@ function loadNextGame() {
   } else {
     // Faire appel a la page de fin
 
-    game = { name: "gameOver", html: "./html/gameOver.html", js: "gameOver.js" },
-    loadGame(game);
+    (game = {
+      name: "gameOver",
+      html: "./html/gameOver.html",
+      js: "gameOver.js",
+    }),
+      loadGame(game);
   }
 }
 
@@ -128,5 +137,3 @@ function gameWin() {
   addPoint(); // Ajouter 1 point
   loadNextGame(); // Charger le jeu suivant
 }
-
-
