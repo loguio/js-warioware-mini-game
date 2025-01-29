@@ -40,13 +40,6 @@ soundToggle.addEventListener('change', (e) => {
     });
 });
 
-const testAudio = document.createElement('audio');
-testAudio.src = './audio/musique.mp3';
-testAudio.loop = true;
-document.body.appendChild(testAudio);
-
-testAudio.play();
-
 
 let remainingGames = [
   // Liste dynamique des jeux restants
