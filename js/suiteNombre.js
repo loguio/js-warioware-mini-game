@@ -1,98 +1,114 @@
-const gameContainer = document.getElementById("game-container");
-const timerElement = document.getElementById("time");
-const popup = document.getElementById("popup");
-const popupMessage = document.getElementById("popup-message");
-const popupReplay = document.getElementById("popup-replay");
+console.log("Script numbers.js chargé, en attente des éléments du jeu...");
 
-let numbers = [1, 2, 3, 4, 5, 6];
-let currentNumber = 1;
-let timeLeft = 10;
-let timer;
+// Vérification régulière que les éléments du DOM sont bien présents
+function waitForGameElements() {
+  let gameContainer = document.getElementById("game-container");
+  let timerElement = document.getElementById("time");
 
-function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-function hasCollision(x, y, squares, squareSize) {
-  return squares.some((square) => {
-    const deltaX = Math.abs(square.x - x);
-    const deltaY = Math.abs(square.y - y);
-    return deltaX < squareSize && deltaY < squareSize;
-  });
-}
-
-function getRandomNonOverlappingPosition(
-  existingSquares,
-  containerSize,
-  squareSize
-) {
-  let position;
-  do {
-    const x = Math.floor(Math.random() * (containerSize - squareSize));
-    const y = Math.floor(Math.random() * (containerSize - squareSize));
-    position = { x, y };
-  } while (hasCollision(position.x, position.y, existingSquares, squareSize));
-  return position;
-}
-
-function createSquares() {
-  gameContainer.innerHTML = "";
-  const shuffledNumbers = shuffleArray([...numbers]);
-  const existingSquares = [];
-  shuffledNumbers.forEach((number) => {
-    const position = getRandomNonOverlappingPosition(existingSquares, 700, 100);
-    existingSquares.push(position);
-
-    const square = document.createElement("div");
-    square.classList.add("square");
-    square.textContent = number;
-    square.style.left = `${position.x}px`;
-    square.style.top = `${position.y}px`;
-    square.addEventListener("click", () => handleSquareClick(number, square));
-    gameContainer.appendChild(square);
-  });
-}
-
-function handleSquareClick(number, square) {
-  if (number !== currentNumber) {
-    endGame(false, "Wrong number clicked!");
+  if (!gameContainer || !timerElement) {
+    console.warn("⏳ Éléments du jeu introuvables, nouvelle tentative...");
+    setTimeout(waitForGameElements, 100);
     return;
   }
 
-  square.classList.add("hidden");
-  currentNumber++;
+  console.log("✅ Éléments du jeu trouvés, activation du jeu Numbers !");
+  startNumbersGame(gameContainer, timerElement);
+}
 
-  if (currentNumber > 6) {
-    endGame(true, "You Win! 🎉");
+// Fonction principale du jeu Numbers
+function startNumbersGame(gameContainer, timerElement) {
+  let numbers = [1, 2, 3, 4, 5, 6];
+  let currentNumber = 1;
+  let timeLeft = 10;
+  let timer = null;
+
+  function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
   }
-}
 
-function startTimer() {
-  timer = setInterval(() => {
-    timeLeft--;
-    timerElement.textContent = timeLeft;
+  function hasCollision(x, y, squares, squareSize) {
+    return squares.some((square) => {
+      const deltaX = Math.abs(square.x - x);
+      const deltaY = Math.abs(square.y - y);
+      return deltaX < squareSize && deltaY < squareSize;
+    });
+  }
 
-    if (timeLeft <= 0) {
-      endGame(false, "Time's up!");
+  function getRandomNonOverlappingPosition(
+    existingSquares,
+    containerSize,
+    squareSize
+  ) {
+    let position;
+    do {
+      let x = Math.floor(Math.random() * (containerSize - squareSize));
+      let y = Math.floor(Math.random() * (containerSize - squareSize));
+      position = { x, y };
+    } while (hasCollision(position.x, position.y, existingSquares, squareSize));
+    return position;
+  }
+
+  function createSquares() {
+    gameContainer.innerHTML = "";
+    let shuffledNumbers = shuffleArray([...numbers]);
+    let existingSquares = [];
+
+    shuffledNumbers.forEach((number) => {
+      let position = getRandomNonOverlappingPosition(existingSquares, 700, 100);
+      existingSquares.push(position);
+
+      let square = document.createElement("div");
+      square.classList.add("square");
+      square.textContent = number;
+      square.style.left = `${position.x}px`;
+      square.style.top = `${position.y}px`;
+      square.addEventListener("click", () => handleSquareClick(number, square));
+      gameContainer.appendChild(square);
+    });
+  }
+
+  function handleSquareClick(number, square) {
+    if (number !== currentNumber) {
+      endGame(false);
+      return;
     }
-  }, 1000);
+
+    square.classList.add("hidden");
+    currentNumber++;
+
+    if (currentNumber > 6) {
+      endGame(true);
+    }
+  }
+
+  function startTimer() {
+    timer = setInterval(() => {
+      timeLeft--;
+      timerElement.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        endGame(false);
+      }
+    }, 1000);
+  }
+
+  function endGame(won) {
+    clearInterval(timer);
+    console.log(won ? "🎉 Bravo, vous avez gagné !" : "⏳ Temps écoulé !");
+    loadNextGame();
+  }
+
+  function startGame() {
+    console.log("🎲 Démarrage du jeu Numbers...");
+    currentNumber = 1;
+    timeLeft = 10;
+    timerElement.textContent = timeLeft;
+    createSquares();
+    startTimer();
+  }
+
+  startGame();
 }
 
-function endGame(won, message) {
-  clearInterval(timer);
-  popupMessage.textContent = message;
-  popup.style.display = "block";
-}
-
-function startGame() {
-  currentNumber = 1;
-  timeLeft = Math.max(5, timeLeft - 1); // Reduce time by 1 second, minimum of 5 seconds
-  timerElement.textContent = timeLeft;
-  popup.style.display = "none";
-  createSquares();
-  startTimer();
-}
-
-popupReplay.addEventListener("click", startGame);
-
-startGame();
+// Démarrer la vérification des éléments du jeu
+waitForGameElements();
