@@ -60,11 +60,10 @@ function startCibleGame(container, scoreContainer, timeContainer) {
             if (score >= 6) {
                 clearInterval(interval);
                 clearInterval(timer);
-                container.innerHTML = "🎉 Bravo, vous avez gagné !";
-                setTimeout(loadNextGame, 2000);
+                setTimeout(gameWin(), 2000);
             } else if (time <= 0) {
                 clearInterval(interval);
-                container.innerHTML = "😆 Le jeu est terminé, t'as raté !";
+                loadNextGame();
             }
         }, 200);
 

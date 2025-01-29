@@ -23,11 +23,11 @@ function randomizePositions() {
 // Vérifier le clic sur la bonne image
 function checkVictory(event, isTrue) {
     if (isTrue) {
-        alert("Victoire ! Vous avez cliqué sur la bonne image !");
-        loadNextGame(); // Passe au jeu suivant
+        // Gagner
+        gameWin(); // Passe au jeu suivant
     } else {
-        alert("Défaite ! Vous avez cliqué sur la mauvaise image.");
-        randomizePositions(); // Réinitialiser le jeu avec de nouvelles positions
+        // Perdu 
+        loadNextGame(); // Passe au jeu suivant
     }
 }
 // Lancer le jeu au chargement de la page
