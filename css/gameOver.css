@@ -1,0 +1,31 @@
+.game-over {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.over-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    padding: 1rem;
+}
+
+.over-content .over-text {
+    font-size: 20px;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.over-content .button-retry {
+    width: 20rem;
+    height: 5rem;
+    border: none;
+    border-radius: 8px;
+    color: dodgerblue;
+    font-size: 20px;
+    font-weight: 600;
+}
