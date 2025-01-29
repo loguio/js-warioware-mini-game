@@ -1,10 +1,9 @@
 const cards = ["pomme", "pomme", "poire", "poire", "peche", "peche"];
 let shuffledCards = [];
 let visibleCardIndex = null; // L'index de la carte visible
-let timer = 5;
-
 const gameBoard = document.getElementById("game-board");
-const timerDisplay = document.getElementById("timer");
+const timerMemories = document.getElementById("timer-memory");
+let timerMemory = 5;
 
 // Mélanger les cartes
 function shuffle(array) {
@@ -33,10 +32,10 @@ function createBoard() {
 // Démarrer le compte à rebours
 function startTimer() {
   const countdown = setInterval(() => {
-    timer--;
-    timerDisplay.textContent = timer;
+    timerMemory--;
+    timerMemories.textContent = timerMemory;
 
-    if (timer <= 0) {
+    if (timerMemory <= 0) {
       clearInterval(countdown);
       hideCardsAndLeaveOne(); // Cache 5 cartes et laisse une visible
       gameActive = true; // Le jeu commence
@@ -62,7 +61,7 @@ function hideCardsAndLeaveOne() {
     }
   });
 
-  timerDisplay.textContent = "Find the pair!";
+  timerMemories.textContent = "Find the pair!";
 }
 
 // Gérer les clics sur les cartes
@@ -78,16 +77,17 @@ function handleCardClick(cardElement) {
   cardElement.classList.remove("hidden");
   cardElement.style.backgroundImage = `url('./img/${clickedValue}.jpg')`;
 
-  setTimeout(() => {
     if (clickedValue === visibleValue) {
       // Gagner
+      clearInterval(timerMemory);
       gameWin(); // Passe au jeu suivant
     } else {
       // Perdu
+      clearInterval(timerMemory);
       loadNextGame(); // Passe au jeu suivant
     }
     gameActive = false; // Terminer le jeu après un clic
-  }, 500); // Afficher la carte cliquée pendant 500ms
+   // Afficher la carte cliquée pendant 500ms
 }
 
 // Démarrer le jeu

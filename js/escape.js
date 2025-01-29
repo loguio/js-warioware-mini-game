@@ -46,9 +46,11 @@ function startGameArea() {
             gameArea.removeEventListener("mousemove", handleMouseMove);
 
             if (!mouseInsafeZone) {
-                alert("Défaite");
+                clearInterval(c);
+                loadNextGame();
             } else {
-                alert("Victoire");
+                clearInterval(c);
+                gameWin();
             }
         }
     }, 1000);

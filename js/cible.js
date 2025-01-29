@@ -1,4 +1,3 @@
-console.log("Script cible.js chargé, en attente des éléments du jeu...");
 
 // Vérification régulière que les éléments du DOM sont bien présents
 function waitForGameElements() {
@@ -7,12 +6,10 @@ function waitForGameElements() {
     let timeContainer = document.querySelector('.time');
 
     if (!container  || !scoreContainer || !timeContainer) {
-        console.warn("⏳ Éléments du jeu introuvables, nouvelle tentative...");
         setTimeout(waitForGameElements, 100);
         return;
     }
 
-    console.log("✅ Éléments du jeu trouvés, activation du bouton Start !");
     startCibleGame(container, scoreContainer, timeContainer);
 }
 
@@ -24,8 +21,6 @@ function startCibleGame(container, scoreContainer, timeContainer) {
     let timer = null;
 
     function startGame() {
-        console.log("🎯 Démarrage du jeu Cible...");
-
         // Réinitialisation des valeurs
         score = 0;
         time = 10;
@@ -60,7 +55,7 @@ function startCibleGame(container, scoreContainer, timeContainer) {
             if (score >= 6) {
                 clearInterval(interval);
                 clearInterval(timer);
-                setTimeout(gameWin(), 2000);
+                gameWin();
             } else if (time <= 0) {
                 clearInterval(interval);
                 loadNextGame();

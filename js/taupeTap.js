@@ -1,6 +1,5 @@
 const holes = document.querySelectorAll('.hole');
 let lastHole;
-let gameActive = false;
 let molesToHit = 3;
 let molesHit = 0;
 
@@ -48,9 +47,9 @@ function startGame() {
 function endGame() {
     gameActive = false;
     if (molesHit >= molesToHit) {
-        alert('Gagné !');
+        gameWin();
     } else {
-        alert('Perdu !');
+        loadNextGame();
     }
 }
 
@@ -64,4 +63,6 @@ holes.forEach(hole => {
 });
 
 // Start the game automatically
-window.addEventListener('load', startGame);
+setTimeout(() => {
+    startGame();
+}, 500);

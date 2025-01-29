@@ -23,4 +23,3 @@ function highScore() {
 highScore();
 displayFinalScore();
 displayHighScore();
-resetScore();

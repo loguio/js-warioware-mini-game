@@ -2,12 +2,11 @@
 const adjustableClock = document.getElementById("adjustable-clock");
 const adjustableHourHand = document.getElementById("adjustable-hour");
 const adjustableMinuteHand = document.getElementById("adjustable-minute");
-
 const fixedClock = document.getElementById("fixed-clock");
 const fixedHourHand = document.getElementById("fixed-hour");
 const fixedMinuteHand = document.getElementById("fixed-minute");
 const result = document.getElementById("result");
-const timerDisplay = document.getElementById("timer");
+const timerDisplay = document.getElementById("timer-horaire");
 
 // Variables pour les angles de l'horloge fixe
 const fixedHourAngle = Math.floor(Math.random() * 12) * 30; // Angle aléatoire
@@ -17,8 +16,8 @@ const fixedMinuteAngle = Math.floor(Math.random() * 60) * 6;
 let isDragging = false;
 let hourAngle = 0;
 let minuteAngle = 0;
-let timer = 10;
-let timerInterval;
+let timerHoraire = 10;
+let timerHoraireInterval;
 let validationTimeout;
 let isValid = false;  // Variable pour suivre si l'heure est validée
 
@@ -88,17 +87,14 @@ function checkIfCorrect() {
   const isHourCorrect = Math.floor(hourAngle / 30) === correctHour;
   const isMinuteCorrect = Math.abs(minuteAngle - fixedMinuteAngle) <= marginOfError;
 
-  console.log("isMinuteCorrect:", isMinuteCorrect);
-  console.log("correctMinute:", correctMinute);
-  console.log("minuteAngle:", minuteAngle);
-
   if (isHourCorrect && isMinuteCorrect) {
       if (!validationTimeout && !isValid) {
           validationTimeout = setTimeout(() => {
               stopTimer();
-              result.textContent = "Heure validée ! Vous avez gagné !";
               isValid = true;
               disableDrag();
+              clearInterval(timerHoraire)
+              gameWin();
           }, 1000);
       }
   } else {
@@ -112,23 +108,22 @@ function checkIfCorrect() {
 
 // Fonction pour démarrer le timer
 function startTimer() {
-  timer = 10; // Réinitialiser le timer à 10 secondes
-  timerDisplay.textContent = `Temps restant : ${timer}s`;
-  timerInterval = setInterval(() => {
-    if (timer > 0) {
-      timer--;
-      timerDisplay.textContent = `Temps restant : ${timer}s`;
+  timerDisplay.textContent = `Temps restant : ${timerHoraire}s`;
+  timerHoraireInterval = setInterval(() => {
+    if (timerHoraire > 0) {
+      timerHoraire--;
+      timerDisplay.textContent = `Temps restant : ${timerHoraire}s`;
     } else {
-      clearInterval(timerInterval);
-      result.textContent = "Temps écoulé. Vous avez perdu !";
+      clearInterval(timerHoraireInterval);
       disableDrag();  // Désactiver le drag si le temps est écoulé
+      loadNextGame();
     }
   }, 1000);
 }
 
 // Fonction pour arrêter le timer
 function stopTimer() {
-    clearInterval(timerInterval);
+    clearInterval(timerHoraireInterval);
     if (isValid) {
       result.textContent = "Temps écoulé. Vous avez perdu !";
     }
@@ -162,4 +157,6 @@ document.addEventListener("touchmove", onDrag);
 document.addEventListener("touchend", stopDrag);
 
 // Démarrer le timer dès que la page est prête
-startTimer();
+setTimeout(() => {
+  startTimer();
+}, 500);

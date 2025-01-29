@@ -1,11 +1,11 @@
+
 const objects = document.querySelectorAll('.object');
 const shadows = document.querySelectorAll('.shadow');
 const drawer = document.querySelector('.drawer');
-const timerElement = document.getElementById("timer").querySelector("span");
+const timerShadowBoxDisplay= document.getElementById("timer-shadow-box").querySelector("span");    
 let isGameOver = false;
 let matchedCount = 0;
-let timer = 5; 
-
+let timerShadowBox = 5; 
 // Fonction pour vérifier si deux rectangles se chevauchent
 function isOverlapping(rect1, rect2) {
     return !(
@@ -40,7 +40,6 @@ function getRandomPosition(element, placedShadows, excludedRect) {
         };
 
         // Vérifie les collisions avec les ombres déjà placées et la zone du tiroir
-        console.log(placedShadows, excludedRect)
         isColliding =
             placedShadows.some((shadowRect) => isOverlapping(newRect, shadowRect)) ||
             isOverlapping(newRect, excludedRect);
@@ -66,12 +65,14 @@ function positionShadowsRandomly() {
 
 function startTimer() {
     const interval = setInterval(() => {
-        timer--;
-        timerElement.textContent = timer + 's';
-        if (timer <= 0) {
+        timerShadowBox--;
+        timerShadowBoxDisplay.textContent = timerShadowBox + 's';
+        if (timerShadowBox <= 0) {
             clearInterval(interval);
+            clearInterval(timerShadowBox);
             isGameOver = true;
-            timerElement.parentElement.textContent = "Temps écoulé !"
+            timerShadowBoxDisplay.parentElement.textContent = "Temps écoulé !"
+            loadNextGame();
         }
     }, 1000);
 }
@@ -125,15 +126,17 @@ function handleDrop(e) {
 
         if (matchedCount === shadows.length) {
             isGameOver = true; 
-            setTimeout(() => {
-                alert('Félicitations, vous avez gagné ! 🎉');
-            }, 100);
+            clearInterval(timerShadowBox);
+            gameWin();
         }
     } else {
-        alert('Perdu ! Ce n’est pas la bonne ombre !');
         isGameOver = true; 
+        clearInterval(timerShadowBox);
+        loadNextGame();
     }
 }
 
 positionShadowsRandomly();
-startTimer();
+setTimeout(() => {
+    startTimer();
+}, "500");

@@ -1,7 +1,6 @@
 const gameArea = document.getElementById("gameArea");
 const trueImage = document.getElementById("trueImage");
 const falseImage = document.getElementById("falseImage");
-const cDisplay = document.getElementById("c");
 
 // Positionner les images aléatoirement dans la zone de jeu
 function randomizePositions() {
