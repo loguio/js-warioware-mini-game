@@ -1,62 +1,68 @@
-const ga = document.getElementById("ga");
-        const sz = document.getElementById("sz");
-        const cDisplay = document.getElementById("c");
+const cDisplay = document.getElementById("c");
 
-        // Positionner la safe zone aléatoirement
-        function positionsz() {
-            const gaRect = ga.getBoundingClientRect();
-            const maxX = gaRect.width - sz.offsetWidth;
-            const maxY = gaRect.height - sz.offsetHeight;
+// Positionner la safe zone aléatoirement
+function positionsafeZone() {
+    const gameArea = document.getElementById("game-area");
+    const safeZone = document.getElementById("safe-zone");
 
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+    const gameAreaRect = gameArea.getBoundingClientRect();
+    const maxX = gameAreaRect.width - safeZone.offsetWidth;
+    const maxY = gameAreaRect.height - safeZone.offsetHeight;
 
-            sz.style.left = `${randomX}px`;
-            sz.style.top = `${randomY}px`;
-        }
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
 
-        // Vérifier si la souris est dans la zone sécurisée
-        function isMouseInsz(event) {
-            const szRect = sz.getBoundingClientRect();
-            return (
-                event.clientX >= szRect.left &&
-                event.clientX <= szRect.right &&
-                event.clientY >= szRect.top &&
-                event.clientY <= szRect.bottom
-            );
-        }
+    safeZone.style.left = `${randomX}px`;
+    safeZone.style.top = `${randomY}px`;
+}
 
-        // Initialiser le jeu
-        function startGame() {
-            positionsz();
+// Vérifier si la souris est dans la zone sécurisée
+function isMouseInsafeZone(event) {
+    const safeZone = document.getElementById("safe-zone");
 
-            let c = 2;
-            cDisplay.textContent = c;
+    const safeZoneRect = safeZone.getBoundingClientRect();
+    return (
+        event.clientX >= safeZoneRect.left &&
+        event.clientX <= safeZoneRect.right &&
+        event.clientY >= safeZoneRect.top &&
+        event.clientY <= safeZoneRect.bottom
+    );
+}
 
-            const interval = setInterval(() => {
-                c--;
-                cDisplay.textContent = c;
+// Initialiser le jeu
+function startGameArea() {
+    const gameArea = document.getElementById("game-area");
+    positionsafeZone();
 
-                if (c <= 0) {
-                    clearInterval(interval);
-                    ga.removeEventListener("mousemove", handleMouseMove);
+    let c = 3;
+    cDisplay.textContent = c;
 
-                    if (!mouseInsz) {
-                        alert("Défaite");
-                    } else {
-                        alert("Victoire");
-                    }
-                }
-            }, 1000);
+    const interval = setInterval(() => {
+        c--;
+        cDisplay.textContent = c;
 
-            let mouseInsz = false;
+        if (c <= 0) {
+            clearInterval(interval);
+            gameArea.removeEventListener("mousemove", handleMouseMove);
 
-            function handleMouseMove(event) {
-                mouseInsz = isMouseInsz(event);
+            if (!mouseInsafeZone) {
+                alert("Défaite");
+            } else {
+                alert("Victoire");
             }
-
-            ga.addEventListener("mousemove", handleMouseMove);
         }
+    }, 1000);
 
-        // Lancer le jeu au chargement de la page
-        startGame();
+    let mouseInsafeZone = false;
+
+    function handleMouseMove(event) {
+        mouseInsafeZone = isMouseInsafeZone(event);
+    }
+
+    gameArea.addEventListener("mousemove", handleMouseMove);
+}
+
+// Lancer le jeu au chargement de la page
+setTimeout(() => {
+    startGameArea();
+  }, "500");
