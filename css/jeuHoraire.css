@@ -1,0 +1,69 @@
+/* Centrage de la page avec Flexbox */
+.game-container {
+  display: flex; /* Utilisation de Flexbox pour aligner les éléments */
+  justify-content: center; /* Centrer horizontalement */
+  align-items: center; /* Centrer verticalement */
+  flex-direction: column; /* Empiler les éléments verticalement */
+  text-align: center;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 10px; /* Espacement sous le titre */
+}
+
+#timer {
+  font-size: 1.5em;
+  color: red;
+  margin-bottom: 30px; /* Espacement avant les horloges */
+}
+
+.clock-face {
+  position: relative;
+  border-radius: 50%; /* Assure un cercle parfait */
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* Empêche les aiguilles de dépasser */
+}
+
+/* Horloge modifiable */
+#adjustable-clock {
+  width: 300px;
+  height: 300px;
+  border: 5px solid #333;
+  margin-top: 20px; /* Espacement entre l'horloge modifiable et le timer */
+}
+
+/* Horloge fixe */
+#fixed-clock {
+  width: 100px;
+  height: 100px;
+  border: 3px solid #666;
+  position: absolute;
+  top: 100px;
+  right: 100px;
+}
+
+/* Aiguilles */
+.hand {
+  position: absolute;
+  width: 50%;
+  height: 4px;
+  background: #333;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 50%; /* Centre de rotation de l'aiguille */
+  transform: rotate(90deg); /* Position de départ */
+}
+
+.hand.minute {
+  height: 2px;
+  background: #666;
+}
+
+/* Résultat */
+#result {
+  margin-top: 30px;
+  font-size: 1.2em;
+  color: #333;
+}
