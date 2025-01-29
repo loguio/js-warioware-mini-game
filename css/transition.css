@@ -1,0 +1,16 @@
+.transition-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    color: white;
+    font-family: 'Play', sans-serif;
+    z-index: 10;
+}
