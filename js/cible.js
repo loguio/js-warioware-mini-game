@@ -1,9 +1,12 @@
 let container = document.querySelector('.container');
-let btn = document.querySelector('.start_btn');
 let scoreContainer = document.querySelector('.score');
 let timeContainer = document.querySelector('.time');
 
-btn.onclick = function () {
+document.addEventListener("DOMContentLoaded", function () {
+    startGame();
+});
+
+function startGame() {
     let score = 0;
     let time = 10; // Temps de départ
     container.innerHTML = "";
@@ -52,4 +55,4 @@ btn.onclick = function () {
             clearInterval(timer);
         }
     }, 1000);
-};
+}
