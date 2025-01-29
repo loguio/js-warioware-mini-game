@@ -3,11 +3,11 @@ const title = document.querySelector(".main-title");
 
 let remainingGames = [
   // Liste dynamique des jeux restants
-  { name: "escape", html: "./html/escape.html", js: "escape.js" },
+  /*{ name: "escape", html: "./html/escape.html", js: "escape.js" },
   { name: "tapeLeMot", html: "./html/tapeLeMot.html", js: "tapeLeMot.js" },
   { name: "sigma", html: "./html/sigma.html", js: "sigma.js" },
   { name: "cible", html: "./html/cible.html", js: "cible.js" },
-  { name: "memories", html: "./html/memories.html", js: "memories.js" },
+  { name: "memories", html: "./html/memories.html", js: "memories.js" },*/
   { name: "quizCulture", html: "./html/quiz_culture.html", js: "quiz_culture.js" },
 ];
 

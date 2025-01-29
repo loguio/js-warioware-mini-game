@@ -48,16 +48,19 @@ section {
     width: 100%;
     height: 100vh;
     text-align: center;
+    margin-top: 0;
 }
 
 .div-1 {
-    padding-top: 3rem;
+    padding-top: -5rem;
 }
 
 .div-1 h1 {
     margin: 0;
-    color: #03346E;
+    color: white;
     font-style: italic;
+    font-family: "Dancing Script", serif;
+    font-optical-sizing: auto;
 }
 
 #imageQuiz {
@@ -101,6 +104,10 @@ section {
 #optionsContainer {
     display: flex;
     gap: 1rem;
+}
+
+#timer {
+    visibility: hidden;
 }
 
 footer {

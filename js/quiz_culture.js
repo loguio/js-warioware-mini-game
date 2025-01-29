@@ -3,28 +3,28 @@ const quizQuestions = [
         id: 1,
         city: "Paris",
         flag: "",
-        options: ["France", "Italie", "Espagne", "Allemagne"],
+        options: ["Italie", "France", "Espagne", "Allemagne"],
         trueCountry: "France"
     },
     {
         id: 2,
         city: "Tokyo",
         flag: "",
-        options: ["Japon", "Chine", "Corée du Sud", "Thaïlande"],
+        options: ["Chine", "Corée du Sud", "Japon", "Thaïlande"],
         trueCountry: "Japon"
     },
     {
         id: 3,
         city: "New York",
         flag: "",
-        options: ["États-Unis", "Canada", "Royaume-Uni", "Australie"],
+        options: ["Canada", "États-Unis", "Royaume-Uni", "Australie"],
         trueCountry: "États-Unis"
     },
     {
         id: 4,
         city: "Berlin",
         flag: "",
-        options: ["Allemagne", "Pays-Bas", "Pologne", "Autriche"],
+        options: ["Pays-Bas", "Allemagne", "Pologne", "Autriche"],
         trueCountry: "Allemagne"
     },
     {
@@ -38,7 +38,7 @@ const quizQuestions = [
         id: 6,
         city: "Rome",
         flag: "",
-        options: ["Italie", "Grèce", "Égypte", "Turquie"],
+        options: ["Grèce", "Égypte", "Turquie", "Italie"],
         trueCountry: "Italie"
     },
     {
@@ -52,7 +52,7 @@ const quizQuestions = [
         id: 8,
         city: "Pékin",
         flag: "",
-        options: ["Chine", "Japon", "Mongolie", "Vietnam"],
+        options: ["Japon", "Chine", "Mongolie", "Vietnam"],
         trueCountry: "Chine"
     },
     {
@@ -66,7 +66,7 @@ const quizQuestions = [
         id: 10,
         city: "Ottawa",
         flag: "",
-        options: ["Canada", "États-Unis", "Mexique", "Cuba"],
+        options: ["États-Unis", "Canada", "Mexique", "Cuba"],
         trueCountry: "Canada"
     },
     {
@@ -80,7 +80,7 @@ const quizQuestions = [
         id: 12,
         city: "Le Caire",
         flag: "",
-        options: ["Égypte", "Soudan", "Arabie Saoudite", "Jordanie"],
+        options: ["Soudan", "Égypte", "Arabie Saoudite", "Jordanie"],
         trueCountry: "Égypte"
     },
     {
@@ -101,7 +101,7 @@ const quizQuestions = [
         id: 15,
         city: "Bangkok",
         flag: "",
-        options: ["Thaïlande", "Vietnam", "Malaisie", "Singapour"],
+        options: ["Vietnam", "Thaïlande", "Malaisie", "Singapour"],
         trueCountry: "Thaïlande"
     },
     {
@@ -115,7 +115,7 @@ const quizQuestions = [
         id: 17,
         city: "Séoul",
         flag: "",
-        options: ["Corée du Sud", "Corée du Nord", "Japon", "Mongolie"],
+        options: ["Corée du Nord", "Japon", "Mongolie", "Corée du Sud"],
         trueCountry: "Corée du Sud"
     },
     {
@@ -129,14 +129,14 @@ const quizQuestions = [
         id: 19,
         city: "Wellington",
         flag: "",
-        options: ["Nouvelle-Zélande", "Australie", "Fidji", "Samoa"],
+        options: ["Australie", "Fidji", "Samoa", "Nouvelle-Zélande"],
         trueCountry: "Nouvelle-Zélande"
     },
     {
         id: 20,
         city: "Stockholm",
         flag: "",
-        options: ["Suède", "Norvège", "Finlande", "Danemark"],
+        options: ["Norvège", "Suède", "Finlande", "Danemark"],
         trueCountry: "Suède"
     }
 ];
@@ -159,11 +159,12 @@ const timerValue = document.getElementById('timerValue');
 }*/
 
 function startQuiz() {
+    const shuffledQuestions = quizQuestions.sort(() => 0.5 - Math.random()).slice(0, 3);
     currentQuestionIndex = 0;
     elapsedTime = 0; // Réinitialiser le temps écoulé
     timerValue.innerHTML = elapsedTime; // Réinitialiser l'affichage du timer
     defineCityNameStyle("#fff");
-    showQuestion();
+    showQuestion(shuffledQuestions);
 
     timer = setInterval(() => {
         elapsedTime++;
@@ -171,9 +172,9 @@ function startQuiz() {
     }, 1000);
 }
 
-function showQuestion() {
-    if (currentQuestionIndex < quizQuestions.length) {
-        const question = quizQuestions[currentQuestionIndex];
+function showQuestion(questions) {
+    if (currentQuestionIndex < questions.length) {
+        const question = questions[currentQuestionIndex];
         cityName.textContent = question.city;
         optionsContainer.innerHTML = '';
 
@@ -183,11 +184,10 @@ function showQuestion() {
             const button = document.createElement('button');
             button.textContent = option;
             button.id = 'btnOption'
-            button.onclick = () => checkAnswer(option, question.trueCountry, button);
+            button.onclick = () => checkAnswer(option, question.trueCountry, button, questions);
             optionsContainer.appendChild(button);
         });
-
-        // Changer la couleur après 3 secondes si aucune réponse
+    // Changer la couleur après 3 secondes si aucune réponse
         // Jaune si pas de réponse
         setTimeout(() => {
             defineCityNameStyle("yellow")
@@ -202,7 +202,7 @@ function showQuestion() {
     }
 }
 
-function checkAnswer(selected, trueCountry, button) {
+function checkAnswer(selected, trueCountry, button, questions) {
     clearTimeout(timer); // Arrêter le timer
     clearInterval(timer); // Arrêter le timer de compt
 
@@ -211,10 +211,11 @@ function checkAnswer(selected, trueCountry, button) {
         defineCityNameStyle("green")
         //cityNameDiv.style.backgroundColor = "green"; // Vert si correct
         currentQuestionIndex++;
-        setTimeout(showQuestion, 500); // Attendre 1 seconde avant de montrer la prochaine question
+        setTimeout(() => showQuestion(questions), 500); // Attendre 1 seconde avant de montrer la prochaine question
     } else {
         button.style.backgroundColor = "red";
-        defineCityNameStyle("red")
+        defineCityNameStyle("red")  
+        cityName.textContent = "Dommage !";
         //cityNameDiv.style.backgroundColor = "red"; // Rouge si incorrect
         endQuiz();
     }
