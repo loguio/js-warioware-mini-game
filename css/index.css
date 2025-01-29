@@ -32,13 +32,22 @@ body {
     gap: 3.5rem;
     border-radius: 12px;
     padding: 2rem;
-    background: url("../img/background.jpg");
+    background-color: #FFFFFF;
     border: 1rem solid rgba(0, 0, 0, 0.39);
 }
 
+.img-bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+}
+
 #game-container {
-    width: 75%;
-    height: 75%;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    color: #FFFFFF !important;
 }
 
 .main-title {
@@ -98,6 +107,7 @@ body {
     color: #E6B229;
     font-size: 20px;
     font-weight: 600;
+    z-index: 1;
 }
 
 .main-content .main-button:hover {
@@ -135,6 +145,7 @@ body {
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
   }
 
   .setting-item {
