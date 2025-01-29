@@ -56,7 +56,7 @@ let remainingGames = [
   { name: "taupeTap", html: "./html/taupeTap.html", js: "taupeTap.js" },
   { name: "suiteNombre", html: "./html/suiteNombre.html", js: "suiteNombre.js"},
   { name: "powerwash", html: "./html/powerwash.html", js: "powerwash.js" },
-  { name: "shadowBox", html: "./html/shadowBox.html", js: "shadowBox.js" },
+  // { name: "shadowBox", html: "./html/shadowBox.html", js: "shadowBox.js" },
 ];
 
 
