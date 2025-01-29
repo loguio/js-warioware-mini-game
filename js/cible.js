@@ -41,7 +41,7 @@ function startCibleGame(container, scoreContainer, timeContainer) {
         interval = setInterval(() => {
             let target = document.createElement('img');
             target.id = "target";
-            target.src = "../img/cible.png";
+            target.src = "./img/cible.png";
             target.style.position = "absolute";
             target.style.top = Math.random() * (500 - 50) + 'px';
             target.style.left = Math.random() * (600 - 50) + 'px';
